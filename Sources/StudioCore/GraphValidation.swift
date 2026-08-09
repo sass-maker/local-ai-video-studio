@@ -77,6 +77,18 @@ public struct EffectGraphValidator: Sendable {
             resolveBackgroundConflict(in: &graph.timeline[segmentIndex], path: path, diagnostics: &diagnostics)
         }
 
+        for segmentIndex in graph.timeline.indices.dropFirst() {
+            let previous = graph.timeline[segmentIndex - 1]
+            let segment = graph.timeline[segmentIndex]
+            if previous.end.isFinite, segment.start.isFinite, segment.start < previous.end {
+                diagnostics.append(.init(
+                    severity: .error,
+                    path: "timeline[\(segmentIndex)]",
+                    message: "Timeline interval overlaps timeline[\(segmentIndex - 1)]."
+                ))
+            }
+        }
+
         let errors = diagnostics.filter { $0.severity == .error }
         guard errors.isEmpty else { throw GraphValidationFailure(diagnostics: diagnostics) }
 

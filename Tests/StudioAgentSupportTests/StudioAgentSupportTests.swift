@@ -1,4 +1,6 @@
+import Foundation
 import StudioAgentSupport
+import StudioCore
 import Testing
 
 @Test func manifestCoversEveryOperationAndEffect() async throws {
@@ -8,6 +10,39 @@ import Testing
 
     #expect(Set(operations.compactMap { $0["id"] as? String }) == Set(StudioAgentService.operations))
     #expect(payload["effectCount"] as? Int == 23)
+    #expect(payload["editActions"] as? [String] == ["add", "remove", "split-segment", "trim-segment", "remove-segment"])
+}
+
+@Test func agentTimelineEditMatchesTheNativeValidatedGraph() async throws {
+    let graph = agentGraph()
+    let segmentID = graph.timeline[0].id
+    let graphObject = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(graph)) as? [String: Any])
+    let result = try await StudioAgentService().run(request("edit", input: [
+        "graph": graphObject,
+        "action": "split-segment",
+        "segmentId": segmentID.uuidString,
+        "at": 2.0,
+    ]))
+    let payload = try #require(result["result"] as? [String: Any])
+    let native = try EffectGraphEditor().splitting(segmentID: segmentID, at: 2, in: graph)
+
+    #expect(payload["graphHash"] as? String == native.canonicalHash)
+    let editedObject = try #require(payload["graph"] as? [String: Any])
+    let edited = try JSONDecoder().decode(EffectGraph.self, from: JSONSerialization.data(withJSONObject: editedObject))
+    #expect(edited == native.graph)
+}
+
+@Test func agentTimelineEditRejectsActionIncompatibleFields() async throws {
+    let graph = agentGraph()
+    let graphObject = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(graph)) as? [String: Any])
+    await #expect(throws: StudioAgentError.self) {
+        try await StudioAgentService().run(request("edit", input: [
+            "graph": graphObject,
+            "action": "remove-segment",
+            "segmentId": graph.timeline[0].id.uuidString,
+            "effect": "style.anime",
+        ]))
+    }
 }
 
 @Test func arbitraryExecutionAndUnknownFieldsFailClosed() async throws {
@@ -71,4 +106,28 @@ private func request(_ operation: String, input: [String: Any] = [:], extra: [St
     ]
     value.merge(extra) { _, new in new }
     return value
+}
+
+private func agentGraph() -> EffectGraph {
+    EffectGraph(
+        id: UUID(uuidString: "10000000-0000-4000-8000-000000000001")!,
+        label: "Agent study",
+        differenceSummary: "Structured agent test",
+        provenance: .init(kind: .deterministicDemo, name: "test", version: "1"),
+        output: .init(aspectRatio: .vertical, width: 1080, height: 1920, fps: 24),
+        timeline: [
+            TimelineSegment(
+                id: UUID(uuidString: "10000000-0000-4000-8000-000000000002")!,
+                start: 0,
+                end: 4,
+                effects: [
+                    EffectNode(
+                        id: UUID(uuidString: "10000000-0000-4000-8000-000000000003")!,
+                        type: .styleCel,
+                        parameters: .init(strength: 0.7)
+                    ),
+                ]
+            ),
+        ]
+    )
 }

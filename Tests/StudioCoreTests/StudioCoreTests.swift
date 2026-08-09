@@ -146,6 +146,54 @@ private func graph(effects: [EffectNode] = [EffectNode(type: .styleCel, paramete
     #expect(tuned.graph.timeline.flatMap(\.effects).first(where: { $0.type == .captionDynamic })?.parameters.preset == "karaoke")
 }
 
+@Test func timelineSplitIsDeterministicAndPreservesCoverage() throws {
+    let editor = EffectGraphEditor()
+    let input = graph()
+    let segmentID = input.timeline[0].id
+    let first = try editor.splitting(segmentID: segmentID, at: 2, in: input)
+    let second = try editor.splitting(segmentID: segmentID, at: 2, in: input)
+
+    #expect(first.canonicalHash == second.canonicalHash)
+    #expect(first.graph.timeline.map(\.start) == [0, 2])
+    #expect(first.graph.timeline.map(\.end) == [2, 4.5])
+    #expect(first.graph.timeline[0].id == segmentID)
+    #expect(first.graph.timeline[1].id == second.graph.timeline[1].id)
+    #expect(first.graph.timeline[0].effects == first.graph.timeline[1].effects)
+}
+
+@Test func timelineStructuralEditsRejectUnsafeIntervals() throws {
+    let editor = EffectGraphEditor()
+    let segmentID = graph().timeline[0].id
+
+    #expect(throws: EffectGraphEditError.splitOutsideSegment) {
+        try editor.splitting(segmentID: segmentID, at: 0, in: graph())
+    }
+    #expect(throws: EffectGraphEditError.cannotRemoveFinalSegment) {
+        try editor.removingSegment(segmentID: segmentID, from: graph())
+    }
+
+    let split = try editor.splitting(segmentID: segmentID, at: 2, in: graph())
+    let rightID = split.graph.timeline[1].id
+    #expect(throws: GraphValidationFailure.self) {
+        try editor.updatingSegment(segmentID: rightID, start: 1, end: 4.5, in: split.graph)
+    }
+    let trimmed = try editor.updatingSegment(segmentID: rightID, start: 2.5, end: 4, in: split.graph)
+    #expect(trimmed.graph.timeline[1].start == 2.5)
+    #expect(trimmed.graph.timeline[1].end == 4)
+
+    let removed = try editor.removingSegment(segmentID: rightID, from: split.graph)
+    #expect(removed.graph.timeline.map(\.id) == [segmentID])
+}
+
+@Test func validatorRejectsOverlappingTimelineSegments() {
+    var input = graph()
+    input.timeline.append(TimelineSegment(start: 4, end: 6, effects: []))
+
+    #expect(throws: GraphValidationFailure.self) {
+        try EffectGraphValidator().validate(input)
+    }
+}
+
 @Test func validatorRejectsInvalidStrength() {
     let input = graph(effects: [EffectNode(type: .styleAnime, parameters: .init(strength: 1.4))])
     #expect(throws: GraphValidationFailure.self) {

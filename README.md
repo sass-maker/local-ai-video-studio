@@ -36,6 +36,23 @@ effect and its readiness. The command is local-only, strictly rejects unknown
 or executable inputs, and emits one JSON result envelope with graph hashes,
 fallbacks, provenance, and artifact paths.
 
+### Structured timeline edits
+
+The `edit` operation supports effect actions plus three bounded timeline
+actions. Each request includes the complete `graph` returned by `plan`,
+`validate`, or a previous edit:
+
+```json
+{"action":"split-segment","segmentId":"<uuid>","at":2.0,"graph":{}}
+{"action":"trim-segment","segmentId":"<uuid>","start":0.5,"end":3.5,"graph":{}}
+{"action":"remove-segment","segmentId":"<uuid>","graph":{}}
+```
+
+These actions change effect intervals, never the source file. Splits preserve
+effects on both sides and are deterministic; invalid bounds, overlaps, unknown
+fields, and removal of the final segment fail closed. Use the returned graph
+and `graphHash` as the input to the next operation.
+
 In the app: import a video, edit the instruction, plan 2–5 variants, then use
 **Effects** to add, remove, or tune registered effects directly. Prompt planning
 and buttons edit the same validated graph. Render drafts, compare them, save
