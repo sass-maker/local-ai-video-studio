@@ -68,14 +68,17 @@ public struct StudioAgentService: Sendable {
                 path: "input"
             )
             let instruction = try requiredString(request.input, "instruction")
-            let count = request.input["variantCount"] as? Int ?? 3
-            let duration = request.input["durationSeconds"] as? Double ?? 30
-            let aspect = AspectRatio(rawValue: request.input["aspectRatio"] as? String ?? "9:16") ?? .vertical
+            let count = try optionalInt(request.input, "variantCount", default: 3)
+            let duration = try optionalDouble(request.input, "durationSeconds", default: 30)
+            let aspectRaw = try optionalString(request.input, "aspectRatio", default: "9:16")
+            guard let aspect = AspectRatio(rawValue: aspectRaw) else {
+                throw StudioAgentError("INVALID_INPUT", "input.aspectRatio is unsupported", path: "input.aspectRatio")
+            }
             let output = OutputProfile(
                 aspectRatio: aspect,
-                width: request.input["width"] as? Int ?? 1080,
-                height: request.input["height"] as? Int ?? 1920,
-                fps: request.input["fps"] as? Int ?? 24
+                width: try optionalInt(request.input, "width", default: 1080),
+                height: try optionalInt(request.input, "height", default: 1920),
+                fps: try optionalInt(request.input, "fps", default: 24)
             )
             let graphs = try await planner.plan(.init(instruction: instruction, variantCount: count, output: output, duration: duration))
             let normalized = try graphs.map(validator.validate)
@@ -141,6 +144,7 @@ public struct StudioAgentService: Sendable {
             let normalized = try validator.validate(try graph(from: request.input["graph"]))
             let fingerprint: String
             if let supplied = request.input["sourceFingerprint"] as? String {
+                try SourceFingerprint.verify(source, expected: supplied)
                 fingerprint = supplied
             } else {
                 fingerprint = try SourceFingerprint.make(for: source)
@@ -165,6 +169,7 @@ public struct StudioAgentService: Sendable {
             guard let selected = project.comparison.selectedVariantID,
                   let revision = project.variants.first(where: { $0.graph.id == selected }),
                   let render = revision.render,
+                  [.completed, .degraded].contains(render.state),
                   render.normalizedGraphHash == revision.normalizedGraphHash,
                   let relative = render.outputRelativePath
             else { throw StudioAgentError("EXPORT_NOT_READY", "selected variant has no current completed render") }
@@ -206,10 +211,12 @@ public struct StudioAgentService: Sendable {
             "product": "studio",
             "operation": request?["operation"] ?? NSNull(),
             "operationId": request?["operationId"] ?? NSNull(),
+            "idempotencyKey": request?["idempotencyKey"] ?? NSNull(),
             "state": "failed",
             "sideEffect": "none",
             "startedAt": Self.timestamp(),
             "finishedAt": Self.timestamp(),
+            "requestHash": NSNull(),
             "result": NSNull(),
             "warnings": [],
             "artifacts": [],
@@ -253,7 +260,15 @@ public struct StudioAgentService: Sendable {
         guard root["schema"] as? String == studioAgentSchema else { throw StudioAgentError("UNSUPPORTED_SCHEMA", "schema must be \(studioAgentSchema)", path: "schema") }
         guard root["product"] as? String == "studio" else { throw StudioAgentError("PRODUCT_MISMATCH", "product must be studio", path: "product") }
         let operation = try requiredString(root, "operation", prefix: "")
-        let input = root["input"] as? [String: Any] ?? [:]
+        let input: [String: Any]
+        if let supplied = root["input"] {
+            guard let object = supplied as? [String: Any] else {
+                throw StudioAgentError("INVALID_INPUT", "input must be a JSON object", path: "input")
+            }
+            input = object
+        } else {
+            input = [:]
+        }
         try rejectForbidden(input, path: "input")
         return Request(operation: operation, operationID: root["operationId"] as? String ?? UUID().uuidString, idempotencyKey: root["idempotencyKey"] as? String, validateOnly: root["validateOnly"] as? Bool == true, input: input)
     }
@@ -300,6 +315,30 @@ public struct StudioAgentService: Sendable {
             throw StudioAgentError("REQUIRED_FIELD", "\(prefix)\(key) is required", path: "\(prefix)\(key)")
         }
         return value
+    }
+
+    private func optionalString(_ object: [String: Any], _ key: String, default defaultValue: String) throws -> String {
+        guard let value = object[key] else { return defaultValue }
+        guard let text = value as? String, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw StudioAgentError("INVALID_INPUT", "input.\(key) must be a non-empty string", path: "input.\(key)")
+        }
+        return text
+    }
+
+    private func optionalInt(_ object: [String: Any], _ key: String, default defaultValue: Int) throws -> Int {
+        guard let value = object[key] else { return defaultValue }
+        guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(), Double(truncating: number).rounded() == Double(truncating: number) else {
+            throw StudioAgentError("INVALID_INPUT", "input.\(key) must be an integer", path: "input.\(key)")
+        }
+        return number.intValue
+    }
+
+    private func optionalDouble(_ object: [String: Any], _ key: String, default defaultValue: Double) throws -> Double {
+        guard let value = object[key] else { return defaultValue }
+        guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID() else {
+            throw StudioAgentError("INVALID_INPUT", "input.\(key) must be a number", path: "input.\(key)")
+        }
+        return number.doubleValue
     }
 
     private func requiredPath(_ object: [String: Any], _ key: String) throws -> URL {

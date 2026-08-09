@@ -20,6 +20,34 @@ import Testing
     }
 }
 
+@Test func malformedInputsFailInsteadOfSilentlyUsingDefaults() async throws {
+    let service = StudioAgentService()
+    await #expect(throws: StudioAgentError.self) {
+        try await service.run([
+            "schema": studioAgentSchema,
+            "product": "studio",
+            "operation": "manifest",
+            "input": ["not", "an", "object"],
+        ])
+    }
+    await #expect(throws: StudioAgentError.self) {
+        try await service.run(request("plan", input: [
+            "instruction": "Create two variants",
+            "variantCount": "three",
+            "durationSeconds": 12.0,
+        ]))
+    }
+}
+
+@Test func failureEnvelopeRetainsTheCompleteProtocolShape() {
+    let service = StudioAgentService()
+    let result = service.failure(request("missing", extra: ["idempotencyKey": "retry-1"]), error: StudioAgentError("UNKNOWN_OPERATION", "missing"))
+
+    #expect(result.keys.contains("idempotencyKey"))
+    #expect(result.keys.contains("requestHash"))
+    #expect(result["idempotencyKey"] as? String == "retry-1")
+}
+
 @Test func promptPlanningReturnsValidatedHashes() async throws {
     let result = try await StudioAgentService().run(request("plan", input: [
         "instruction": "Create three vertical variants: anime, comic, and clean captions",
