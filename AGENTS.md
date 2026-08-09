@@ -28,6 +28,10 @@
 
 ## Agent operation
 
+- Use `swift run studio-agent` with one `fleet.video-agent-operation.v1`
+  request on stdin or via `--request`. Begin with `manifest` and `catalog`.
+- Use `validateOnly: true` before render, project selection, or export. The
+  CLI emits one JSON result envelope and never publishes externally.
 - Prefer structured project files and effect graphs over UI automation.
 - Treat SwiftUI as a human control surface, not the canonical automation API.
 - Keep agent actions bounded to registered effect IDs and validated parameters.
