@@ -23,6 +23,19 @@ To open a source immediately:
 swift run LocalVideoStudio /absolute/path/to/video.mov
 ```
 
+Agents do not need to drive SwiftUI. The headless command uses the same native
+planner, 23-effect registry, validator, graph editor, estimator, analyzer, and
+renderer:
+
+```bash
+echo '{"schema":"fleet.video-agent-operation.v1","product":"studio","operation":"manifest","input":{}}' | swift run studio-agent
+```
+
+Available operations are discovered from `manifest`; `catalog` returns every
+effect and its readiness. The command is local-only, strictly rejects unknown
+or executable inputs, and emits one JSON result envelope with graph hashes,
+fallbacks, provenance, and artifact paths.
+
 In the app: import a video, edit the instruction, plan 2–5 variants, then use
 **Effects** to add, remove, or tune registered effects directly. Prompt planning
 and buttons edit the same validated graph. Render drafts, compare them, save

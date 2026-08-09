@@ -32,6 +32,9 @@ frame-perfect editing.
 
 ## Timeline
 
+- 2026-08-09 — Added the headless `studio-agent` executable over the same
+  native planner, analyzer, 23-effect registry, validator, graph editor,
+  estimator, renderer, project store, selection, and hash-gated export rules.
 - 2026-08-09 — Added a native 23-effect capability catalog and direct effect
   controls that share the validated graph and reproducibility path with prompt
   planning.
@@ -54,6 +57,9 @@ frame-perfect editing.
   planner.
 - Adaptive dark-first comparison workspace with synchronized playback, stale
   revision protection, save-for-later markers, and hash-gated export.
+- Strict machine-readable capability discovery and local operations with
+  stable graph hashes, planner provenance, fallback truth, artifact paths, and
+  rejection of unknown or executable inputs.
 
 ## Work queue
 
