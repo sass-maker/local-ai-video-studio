@@ -106,17 +106,47 @@ public struct StudioAgentService: Sendable {
             ]
             artifacts = []
         case "edit":
-            try exact(request.input, allowed: ["graph", "action", "effect"], path: "input")
             let inputGraph = try graph(from: request.input["graph"])
-            let effect = try effectType(request.input["effect"])
             let action = try requiredString(request.input, "action")
             let normalized: NormalizedGraph
-            if action == "add" {
-                normalized = try editor.adding(effect, to: inputGraph)
-            } else if action == "remove" {
-                normalized = try editor.removing(effect, from: inputGraph)
-            } else {
-                throw StudioAgentError("INVALID_ACTION", "action must be add or remove", path: "input.action")
+            do {
+                switch action {
+                case "add", "remove":
+                    try exact(request.input, allowed: ["graph", "action", "effect"], path: "input")
+                    let effect = try effectType(request.input["effect"])
+                    normalized = action == "add"
+                        ? try editor.adding(effect, to: inputGraph)
+                        : try editor.removing(effect, from: inputGraph)
+                case "split-segment":
+                    try exact(request.input, allowed: ["graph", "action", "segmentId", "at"], path: "input")
+                    normalized = try editor.splitting(
+                        segmentID: requiredUUID(request.input, "segmentId"),
+                        at: requiredDouble(request.input, "at"),
+                        in: inputGraph
+                    )
+                case "trim-segment":
+                    try exact(request.input, allowed: ["graph", "action", "segmentId", "start", "end"], path: "input")
+                    normalized = try editor.updatingSegment(
+                        segmentID: requiredUUID(request.input, "segmentId"),
+                        start: requiredDouble(request.input, "start"),
+                        end: requiredDouble(request.input, "end"),
+                        in: inputGraph
+                    )
+                case "remove-segment":
+                    try exact(request.input, allowed: ["graph", "action", "segmentId"], path: "input")
+                    normalized = try editor.removingSegment(
+                        segmentID: requiredUUID(request.input, "segmentId"),
+                        from: inputGraph
+                    )
+                default:
+                    throw StudioAgentError(
+                        "INVALID_ACTION",
+                        "action must be add, remove, split-segment, trim-segment, or remove-segment",
+                        path: "input.action"
+                    )
+                }
+            } catch let error as EffectGraphEditError {
+                throw StudioAgentError("INVALID_EDIT", String(describing: error), path: "input")
             }
             result = try normalizedObject(normalized)
             artifacts = []
@@ -235,6 +265,7 @@ public struct StudioAgentService: Sendable {
             "product": "studio",
             "transport": ["kind": "cli-json", "foreground": true, "stdout": "single-json-envelope"],
             "operations": Self.operations.map { ["id": $0, "sideEffect": sideEffect($0)] },
+            "editActions": ["add", "remove", "split-segment", "trim-segment", "remove-segment"],
             "effectCount": EffectRegistry.standard.allDefinitions.count,
             "safety": ["arbitraryExecution": false, "localByDefault": true, "externalPublication": false],
             "cancellation": ["processSurvival": false, "mechanism": "terminate foreground process"],
@@ -339,6 +370,16 @@ public struct StudioAgentService: Sendable {
             throw StudioAgentError("INVALID_INPUT", "input.\(key) must be a number", path: "input.\(key)")
         }
         return number.doubleValue
+    }
+
+    private func requiredDouble(_ object: [String: Any], _ key: String) throws -> Double {
+        guard let value = object[key] as? NSNumber,
+              CFGetTypeID(value) != CFBooleanGetTypeID(),
+              value.doubleValue.isFinite
+        else {
+            throw StudioAgentError("INVALID_INPUT", "input.\(key) must be a finite number", path: "input.\(key)")
+        }
+        return value.doubleValue
     }
 
     private func requiredPath(_ object: [String: Any], _ key: String) throws -> URL {

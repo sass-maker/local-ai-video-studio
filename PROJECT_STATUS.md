@@ -1,6 +1,6 @@
 # Local AI Video Studio — PROJECT STATUS
 
-Last updated: 2026-08-09
+Last updated: 2026-08-10
 
 ## Why / What
 
@@ -32,6 +32,8 @@ frame-perfect editing.
 
 ## Timeline
 
+- 2026-08-10 — Added deterministic timeline-segment split, trim, and removal
+  through the shared validated graph and headless agent interface.
 - 2026-08-09 — Added the headless `studio-agent` executable over the same
   native planner, analyzer, 23-effect registry, validator, graph editor,
   estimator, renderer, project store, selection, and hash-gated export rules.
@@ -60,6 +62,8 @@ frame-perfect editing.
 - Strict machine-readable capability discovery and local operations with
   stable graph hashes, planner provenance, fallback truth, artifact paths, and
   rejection of unknown or executable inputs.
+- Deterministic effect-timeline segment split, bound changes, and safe removal,
+  including overlap rejection and strict agent payload validation.
 
 ## Work queue
 
