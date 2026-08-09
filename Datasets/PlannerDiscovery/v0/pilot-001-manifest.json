@@ -1,0 +1,26 @@
+{
+  "shard_id": "pilot-001",
+  "schema_version": "discovery-v0",
+  "record_count": 20,
+  "teacher": "devin/glm-5.2",
+  "status": "reviewed",
+  "generation_runs": [
+    {"run_id":"run_f082787c37a80a2e6f6635d2e2aa0531","disposition":"rejected"},
+    {"run_id":"run_fecd4a352e89eef559f24fef9667789f","disposition":"rejected"},
+    {"run_id":"run_7b305e247a1f033d77da16a7efc00a15","disposition":"accepted"},
+    {"run_id":"run_6eb0a726d966533e4e9e5a0938dc707f","disposition":"accepted_with_normalization"},
+    {"run_id":"run_4bbbd065b81d467eb1c9cae74281bace","disposition":"accepted_with_normalization"},
+    {"run_id":"run_555cc8a94fe0ad83f8def70997fcd362","disposition":"accepted"},
+    {"run_id":"run_d001dcf4a8d99cfccfc685adecad9307","disposition":"rejected"},
+    {"run_id":"run_df922d65bd799f77276ff01d6b601607","disposition":"accepted_with_normalization"},
+    {"run_id":"run_14b8f659a4dd8da1a6fc5c6f2e9d932c","disposition":"accepted_with_normalization"},
+    {"run_id":"run_5a3685239b077bf24ea88bfaef146d4d","disposition":"accepted"}
+  ],
+  "records": [
+    "pilot-001-001", "pilot-001-002", "pilot-001-003", "pilot-001-004",
+    "pilot-001-005", "pilot-001-006", "pilot-001-007", "pilot-001-008",
+    "pilot-001-009", "pilot-001-010", "pilot-001-011", "pilot-001-012",
+    "pilot-001-013", "pilot-001-014", "pilot-001-015", "pilot-001-016",
+    "pilot-001-017", "pilot-001-018", "pilot-001-019", "pilot-001-020"
+  ]
+}

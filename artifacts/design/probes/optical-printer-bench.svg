@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <rect width="1440" height="900" fill="#e8e5dc"/>
+  <rect x="26" y="22" width="1388" height="56" rx="6" fill="#202426"/>
+  <text x="52" y="58" fill="#f4f1e8" font-family="Helvetica Neue" font-size="22" font-weight="600">LOCAL VIDEO STUDIO</text>
+  <text x="1110" y="56" fill="#a8d6cf" font-family="Menlo" font-size="14">PROJECT  /  CITY WALK  /  LOCAL</text>
+  <rect x="26" y="96" width="294" height="748" rx="8" fill="#d5d0c4"/>
+  <text x="50" y="134" fill="#1f2628" font-family="Helvetica Neue" font-size="15" font-weight="700">SOURCE &amp; INTENT</text>
+  <rect x="50" y="158" width="246" height="138" rx="4" fill="#22292b"/>
+  <rect x="68" y="176" width="210" height="102" fill="#88968e"/>
+  <circle cx="171" cy="223" r="26" fill="#d9b172"/>
+  <text x="50" y="330" fill="#1f2628" font-family="Menlo" font-size="12">00:42.08  ·  1920×1080  ·  24</text>
+  <rect x="50" y="354" width="246" height="126" rx="5" fill="#f5f2e9" stroke="#8b887f"/>
+  <text x="66" y="382" fill="#596062" font-family="Helvetica Neue" font-size="12">EDIT INSTRUCTION</text>
+  <text x="66" y="414" fill="#1f2628" font-family="Helvetica Neue" font-size="15">Three vertical reels.</text>
+  <text x="66" y="438" fill="#1f2628" font-family="Helvetica Neue" font-size="15">Keep faces recognizable…</text>
+  <rect x="50" y="505" width="116" height="36" rx="4" fill="#1f2628"/><text x="76" y="528" fill="#fff" font-family="Helvetica Neue" font-size="13">PLAN 3</text>
+  <text x="50" y="590" fill="#596062" font-family="Helvetica Neue" font-size="12">RENDER ESTIMATE</text>
+  <text x="50" y="622" fill="#1f2628" font-family="Menlo" font-size="14">MEDIUM · 720P DRAFT</text>
+  <line x1="50" y1="646" x2="296" y2="646" stroke="#8b887f"/>
+  <text x="50" y="678" fill="#596062" font-family="Helvetica Neue" font-size="12">DISK AVAILABLE</text>
+  <text x="50" y="708" fill="#1f2628" font-family="Menlo" font-size="14">148.2 GB</text>
+  <text x="346" y="126" fill="#1f2628" font-family="Helvetica Neue" font-size="17" font-weight="700">COMPARISON BENCH</text>
+  <text x="1218" y="126" fill="#596062" font-family="Menlo" font-size="12">PROBE  00:02.18</text>
+  <g transform="translate(346 150)">
+    <rect width="326" height="550" rx="6" fill="#171b1c"/><rect x="69" y="28" width="188" height="334" fill="#4e756f"/>
+    <circle cx="164" cy="156" r="54" fill="#ddb373"/><path d="M82 290 L246 232 L246 362 L82 362Z" fill="#1f3c45"/>
+    <rect y="386" width="326" height="164" fill="#f2efe5"/><text x="18" y="416" fill="#1f2628" font-family="Helvetica Neue" font-size="13" font-weight="700">A · CEL STUDY</text>
+    <text x="18" y="446" fill="#596062" font-family="Menlo" font-size="11">9:16 · 00:38 · APPROXIMATION</text><rect x="18" y="474" width="198" height="6" fill="#c6c0b2"/><rect x="18" y="474" width="128" height="6" fill="#c77957"/>
+    <text x="18" y="516" fill="#1f2628" font-family="Helvetica Neue" font-size="12">Outline 0.62 · Palette 6</text>
+  </g>
+  <g transform="translate(696 150)">
+    <rect width="326" height="550" rx="6" fill="#171b1c"/><rect x="69" y="28" width="188" height="334" fill="#c79553"/>
+    <circle cx="164" cy="156" r="54" fill="#e7c996" stroke="#222" stroke-width="8"/><path d="M82 290 L246 232 L246 362 L82 362Z" fill="#6b3040" stroke="#222" stroke-width="7"/>
+    <rect y="386" width="326" height="164" fill="#f2efe5"/><text x="18" y="416" fill="#1f2628" font-family="Helvetica Neue" font-size="13" font-weight="700">B · COMIC INK</text>
+    <text x="18" y="446" fill="#596062" font-family="Menlo" font-size="11">9:16 · 00:38 · APPROXIMATION</text><rect x="18" y="474" width="198" height="6" fill="#c6c0b2"/><rect x="18" y="474" width="164" height="6" fill="#c77957"/>
+    <text x="18" y="516" fill="#1f2628" font-family="Helvetica Neue" font-size="12">Ink 0.78 · Halftone 0.34</text>
+  </g>
+  <g transform="translate(1046 150)">
+    <rect width="326" height="550" rx="6" fill="#171b1c"/><rect x="69" y="28" width="188" height="334" fill="#6b8493"/>
+    <circle cx="164" cy="156" r="54" fill="#d6a875"/><path d="M82 290 L246 232 L246 362 L82 362Z" fill="#2b3237"/>
+    <text x="96" y="320" fill="#fff" font-family="Helvetica Neue" font-size="20" font-weight="700">MOVE WITH IT.</text>
+    <rect y="386" width="326" height="164" fill="#f2efe5"/><text x="18" y="416" fill="#1f2628" font-family="Helvetica Neue" font-size="13" font-weight="700">C · CLEAN PULSE</text>
+    <text x="18" y="446" fill="#596062" font-family="Menlo" font-size="11">9:16 · 00:38 · ORIGINAL</text><rect x="18" y="474" width="198" height="6" fill="#c6c0b2"/><rect x="18" y="474" width="142" height="6" fill="#4e8f87"/>
+    <text x="18" y="516" fill="#1f2628" font-family="Helvetica Neue" font-size="12">Caption bold · Beat flash 0.41</text>
+  </g>
+  <line x1="346" y1="744" x2="1372" y2="744" stroke="#8b887f"/>
+  <circle cx="811" cy="744" r="9" fill="#c77957"/><text x="346" y="782" fill="#596062" font-family="Menlo" font-size="12">00:00</text><text x="1328" y="782" fill="#596062" font-family="Menlo" font-size="12">00:38</text>
+  <rect x="346" y="806" width="140" height="38" rx="4" fill="#1f2628"/><text x="384" y="831" fill="#fff" font-family="Helvetica Neue" font-size="13">PLAY ALL</text>
+  <text x="510" y="831" fill="#1f2628" font-family="Helvetica Neue" font-size="13">BLIND LABELS</text><text x="1202" y="831" fill="#1f2628" font-family="Helvetica Neue" font-size="13" font-weight="700">EXPORT SELECTED</text>
+</svg>

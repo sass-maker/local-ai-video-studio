@@ -1,0 +1,43 @@
+## Operating rules
+
+- Do not run destructive commands or touch secrets and credentials.
+- Inspect git state and the smallest relevant source and tests before editing.
+- Preserve unrelated work, prefer small diffs, and run the narrowest relevant
+  check first.
+- Do not commit, push, release, add production dependencies, or render large
+  media unless explicitly authorized.
+- Use the repo-local OpenSpec workflow for non-trivial features and preserve the
+  validated design-review receipt for meaningful visual changes.
+
+## Project
+
+- Stack: Swift 6, SwiftUI, AVFoundation, Core Image, XCTest
+- Local dev: `swift run LocalVideoStudio`
+- Checks: `swift test` then `swift build`
+- Platform: macOS 14+ on Apple Silicon
+
+## Boundaries
+
+- Keep media processing local and offline-capable.
+- The planner may emit only the versioned effect-graph schema; it must never
+  execute shell commands or arbitrary code.
+- Do not add model runtimes, FFmpeg, or other production dependencies without
+  explicit approval and a documented licensing/size rationale.
+- Preserve graceful fallback: an unsupported effect must not invalidate an
+  otherwise renderable variant.
+
+## Agent operation
+
+- Prefer structured project files and effect graphs over UI automation.
+- Treat SwiftUI as a human control surface, not the canonical automation API.
+- Keep agent actions bounded to registered effect IDs and validated parameters.
+- Surface planner provenance, graph hashes, fallback reasons, estimated cost,
+  and artifact paths in machine-readable results.
+- Never allow a model to execute shell commands or arbitrary code.
+
+## Visual work
+
+The owner-approved Optical Printer Bench direction is established. New UI work
+defaults to the `preserve` lane unless the owner explicitly approves another
+overhaul. Follow the Fleet `design-workflow` and do not claim completion until
+its receipt passes.

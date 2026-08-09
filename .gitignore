@@ -1,0 +1,14 @@
+.DS_Store
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.fleet/*
+!.fleet/design-review.json
+.fleet-local/
+.impeccable/
+Models/
+Renders/
+Projects/
+artifacts/test-input.mp4

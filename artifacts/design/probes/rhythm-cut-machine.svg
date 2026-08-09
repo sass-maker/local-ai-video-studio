@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <rect width="1440" height="900" fill="#252321"/><rect x="22" y="20" width="1396" height="860" rx="18" fill="#34312d" stroke="#716b62" stroke-width="2"/>
+  <text x="52" y="65" fill="#f5efe3" font-family="Avenir Next" font-size="25" font-weight="700">CUT / THREE</text><text x="1190" y="63" fill="#f4c44e" font-family="Menlo" font-size="20">096.0 BPM</text>
+  <line x1="48" y1="88" x2="1392" y2="88" stroke="#716b62"/>
+  <rect x="48" y="116" width="1344" height="436" rx="10" fill="#1d1c1b"/>
+  <g transform="translate(76 140)"><rect width="372" height="384" rx="5" fill="#0f1010"/><rect x="78" y="18" width="216" height="326" fill="#456e6d"/><circle cx="186" cy="140" r="56" fill="#d4aa71"/><path d="M92 298 L278 218 L278 344 L92 344Z" fill="#243c43"/><text x="14" y="370" fill="#f2eee5" font-family="Avenir Next" font-size="13" font-weight="700">A  CEL STUDY</text></g>
+  <g transform="translate(534 140)"><rect width="372" height="384" rx="5" fill="#0f1010"/><rect x="78" y="18" width="216" height="326" fill="#bd853e"/><circle cx="186" cy="140" r="56" fill="#dfbb7d" stroke="#111" stroke-width="8"/><path d="M92 298 L278 218 L278 344 L92 344Z" fill="#783044" stroke="#111" stroke-width="7"/><text x="14" y="370" fill="#f2eee5" font-family="Avenir Next" font-size="13" font-weight="700">B  COMIC INK</text></g>
+  <g transform="translate(992 140)"><rect width="372" height="384" rx="5" fill="#0f1010"/><rect x="78" y="18" width="216" height="326" fill="#657d89"/><circle cx="186" cy="140" r="56" fill="#d0a36f"/><path d="M92 298 L278 218 L278 344 L92 344Z" fill="#2d3437"/><text x="112" y="307" fill="#fff" font-family="Avenir Next" font-size="19" font-weight="700">MOVE WITH IT.</text><text x="14" y="370" fill="#f2eee5" font-family="Avenir Next" font-size="13" font-weight="700">C  CLEAN PULSE</text></g>
+  <text x="50" y="596" fill="#d5cfc2" font-family="Menlo" font-size="12">SHARED CUT CLOCK  ·  BAR 04 / 08</text>
+  <g transform="translate(50 620)">
+    <rect width="78" height="84" rx="6" fill="#ce5749"/><rect x="84" width="78" height="84" rx="6" fill="#4c4842"/><rect x="168" width="78" height="84" rx="6" fill="#4c4842"/><rect x="252" width="78" height="84" rx="6" fill="#ce5749"/>
+    <rect x="336" width="78" height="84" rx="6" fill="#dd8d3d"/><rect x="420" width="78" height="84" rx="6" fill="#4c4842"/><rect x="504" width="78" height="84" rx="6" fill="#dd8d3d"/><rect x="588" width="78" height="84" rx="6" fill="#4c4842"/>
+    <rect x="672" width="78" height="84" rx="6" fill="#e0bb43"/><rect x="756" width="78" height="84" rx="6" fill="#4c4842"/><rect x="840" width="78" height="84" rx="6" fill="#4c4842"/><rect x="924" width="78" height="84" rx="6" fill="#e0bb43"/>
+    <rect x="1008" width="78" height="84" rx="6" fill="#e8e3d8"/><rect x="1092" width="78" height="84" rx="6" fill="#4c4842"/><rect x="1176" width="78" height="84" rx="6" fill="#e8e3d8"/><rect x="1260" width="78" height="84" rx="6" fill="#4c4842"/>
+    <circle cx="375" cy="-12" r="7" fill="#f4c44e"/>
+  </g>
+  <g fill="#d5cfc2" font-family="Menlo" font-size="11"><text x="50" y="726">1</text><text x="386" y="726">5</text><text x="722" y="726">9</text><text x="1058" y="726">13</text></g>
+  <rect x="50" y="760" width="148" height="64" rx="7" fill="#e8e3d8"/><text x="90" y="799" fill="#242220" font-family="Avenir Next" font-size="15" font-weight="700">PLAY ALL</text><rect x="218" y="760" width="148" height="64" rx="7" fill="#4c4842"/><text x="253" y="799" fill="#f4c44e" font-family="Avenir Next" font-size="15" font-weight="700">BLIND</text><text x="1030" y="788" fill="#d5cfc2" font-family="Menlo" font-size="11">SELECTED  B</text><rect x="1170" y="760" width="222" height="64" rx="7" fill="#ce5749"/><text x="1211" y="799" fill="#fff" font-family="Avenir Next" font-size="15" font-weight="700">EXPORT TAKE B</text>
+</svg>

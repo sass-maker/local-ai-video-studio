@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Local Video Studio semantic plan v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["record_id", "decision", "reason", "variants"],
+  "properties": {
+    "record_id": { "type": "string", "minLength": 1 },
+    "decision": { "enum": ["plan", "clarify", "unsupported"] },
+    "reason": { "type": "string", "minLength": 1 },
+    "variants": {
+      "type": "array",
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/variant" }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "decision": { "const": "plan" } } },
+      "then": { "properties": { "variants": { "minItems": 2, "maxItems": 5 } } },
+      "else": { "properties": { "variants": { "maxItems": 0 } } }
+    }
+  ],
+  "$defs": {
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "output", "effects"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "output": { "enum": ["vertical", "landscape", "square", "source"] },
+        "effects": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/effect" } }
+      }
+    },
+    "effect": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": {
+            "type": { "enum": ["style.anime", "style.comic", "style.sketch", "style.watercolor", "style.cel", "style.cinematic", "style.noir", "style.vhs", "background.blur", "subject.outline", "subject.glow"] },
+            "strength": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": {
+            "type": { "enum": ["beat.flash", "beat.zoom", "color.grade"] },
+            "intensity": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": { "type": { "const": "timeline.speed" }, "rate": { "type": "number", "minimum": 0.25, "maximum": 4 } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": { "type": { "const": "transition.crossfade" }, "duration": { "type": "number", "minimum": 0.05, "maximum": 2 } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": { "type": { "const": "crop.auto_subject" }, "target": { "type": "string" } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": {
+            "type": { "enum": ["frame.resize", "caption.dynamic", "title.card", "background.replace", "audio.normalize"] },
+            "preset": { "type": "string" }, "text": { "type": "string" }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": { "type": { "const": "timeline.trim" } }
+        }
+      ]
+    }
+  }
+}

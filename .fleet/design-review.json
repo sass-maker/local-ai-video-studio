@@ -1,0 +1,67 @@
+{
+  "$schema": "fleet.design-review.v1",
+  "version": 1,
+  "project": "local-ai-video-studio",
+  "target": "native effect catalog and direct graph controls",
+  "mode": "preserve",
+  "register": "product",
+  "context": {
+    "product": "PRODUCT.md",
+    "design": "DESIGN.md"
+  },
+  "direction": {
+    "references": [
+      "DaVinci Resolve Edit page — dual-viewer comparison and persistent timeline",
+      "Final Cut Pro — media-led magnetic timeline and role-aware organization",
+      "Ableton Live — instrument-state clarity and beat-grid immediacy"
+    ],
+    "probes": [
+      "artifacts/design/probes/optical-printer-bench.png",
+      "artifacts/design/probes/graphite-render-console.png",
+      "artifacts/design/probes/rhythm-cut-machine.png"
+    ],
+    "selected": "optical-printer-bench",
+    "approval": "approved",
+    "before": "artifacts/design/runtime-simplified-dark.png"
+  },
+  "evidence": {
+    "screenshots": [
+      {
+        "width": 390,
+        "path": "artifacts/design/after-390.png"
+      },
+      {
+        "width": 768,
+        "path": "artifacts/design/after-768.png"
+      },
+      {
+        "width": 1440,
+        "path": "artifacts/design/after-1440.png"
+      }
+    ],
+    "projectCheck": {
+      "command": "swift test --filter StudioCoreTests && swift build",
+      "status": "pass"
+    },
+    "critique": {
+      "score": 34,
+      "maximum": 40
+    },
+    "audit": {
+      "score": 17,
+      "maximum": 20
+    },
+    "unresolved": {
+      "p0": 0,
+      "p1": 0
+    },
+    "detector": {
+      "posture": "advisory",
+      "findings": []
+    }
+  },
+  "ownerFeedback": {
+    "decision": "delegated",
+    "note": "Owner approved the direction and explicitly delegated completion with ‘finish all’."
+  }
+}

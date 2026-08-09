@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local-video-studio.invalid/planner-discovery/v0/record.schema.json",
+  "title": "Planner schema-discovery record v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id", "prompt", "category", "constraints", "capability_tags",
+    "teacher", "raw_response", "candidate_graphs", "validation", "human_review"
+  ],
+  "properties": {
+    "record_id": { "type": "string", "pattern": "^pilot-001-[0-9]{3}$" },
+    "prompt": { "type": "string", "minLength": 1 },
+    "category": {
+      "enum": ["representative", "adversarial", "ambiguous", "unsupported"]
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["variant_count", "required_effects", "forbidden_effects"],
+      "properties": {
+        "variant_count": { "type": "integer", "minimum": 2, "maximum": 5 },
+        "required_effects": { "type": "array", "items": { "type": "string" } },
+        "forbidden_effects": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "capability_tags": { "type": "array", "items": { "type": "string" } },
+    "teacher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "model", "prompt_version", "generated_at"],
+      "properties": {
+        "provider": { "const": "devin" },
+        "model": { "const": "glm-5.2" },
+        "prompt_version": { "const": "discovery-v0" },
+        "generated_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "raw_response": { "type": ["object", "array", "string"] },
+    "candidate_graphs": { "type": "array", "items": { "type": "object" } },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "validator_version", "findings"],
+      "properties": {
+        "status": { "enum": ["pending", "pass", "fail"] },
+        "validator_version": { "type": "string" },
+        "findings": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "human_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "notes"],
+      "properties": {
+        "status": { "enum": ["pending", "accept", "revise", "reject"] },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}
