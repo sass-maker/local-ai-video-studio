@@ -2,53 +2,49 @@
   "$schema": "fleet.design-review.v1",
   "version": 1,
   "project": "local-ai-video-studio",
-  "target": "native effect catalog and direct graph controls",
+  "target": "Local AI Video Studio public product site",
   "mode": "preserve",
-  "register": "product",
+  "register": "brand",
   "context": {
     "product": "PRODUCT.md",
     "design": "DESIGN.md"
   },
   "direction": {
     "references": [
-      "DaVinci Resolve Edit page — dual-viewer comparison and persistent timeline",
-      "Final Cut Pro — media-led magnetic timeline and role-aware organization",
-      "Ableton Live — instrument-state clarity and beat-grid immediacy"
+      "DESIGN.md Optical Printer Bench direction contract",
+      "artifacts/design/after-1440.png",
+      "artifacts/design/probes/optical-printer-bench.png"
     ],
-    "probes": [
-      "artifacts/design/probes/optical-printer-bench.png",
-      "artifacts/design/probes/graphite-render-console.png",
-      "artifacts/design/probes/rhythm-cut-machine.png"
-    ],
-    "selected": "optical-printer-bench",
-    "approval": "approved",
-    "before": "artifacts/design/runtime-simplified-dark.png"
+    "probes": [],
+    "selected": "Translate the approved Optical Printer Bench contact-sheet workspace into a media-led Persuade surface.",
+    "approval": "not-required",
+    "before": "artifacts/design/after-1440.png"
   },
   "evidence": {
     "screenshots": [
       {
         "width": 390,
-        "path": "artifacts/design/after-390.png"
+        "path": "artifacts/design/site-release-after-390.png"
       },
       {
         "width": 768,
-        "path": "artifacts/design/after-768.png"
+        "path": "artifacts/design/site-release-after-768.png"
       },
       {
         "width": 1440,
-        "path": "artifacts/design/after-1440.png"
+        "path": "artifacts/design/site-release-after-1440.png"
       }
     ],
     "projectCheck": {
-      "command": "swift test --filter StudioCoreTests && swift build",
+      "command": "node --check scripts/build-site.mjs && node --check scripts/check-site.mjs && node scripts/check-site.mjs && build-site smoke && Impeccable detector && git diff --check && design-workflow check",
       "status": "pass"
     },
     "critique": {
-      "score": 34,
+      "score": 38,
       "maximum": 40
     },
     "audit": {
-      "score": 17,
+      "score": 18,
       "maximum": 20
     },
     "unresolved": {
@@ -62,6 +58,6 @@
   },
   "ownerFeedback": {
     "decision": "delegated",
-    "note": "Owner approved the direction and explicitly delegated completion with ‘finish all’."
+    "note": "Owner approved the cross-repository product-site plan and delegated completion while requiring beautiful UI and quiet, sequential validation."
   }
 }
