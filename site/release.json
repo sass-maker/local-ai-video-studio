@@ -7,10 +7,10 @@
   "architecture": "arm64",
   "status": "preparing",
   "downloadUrl": null,
-  "sha256": null,
+  "sha256": "a1623ceea1c34715a32e5adefd5ae93919488cc5c3e519b67d3855914d809a46",
   "supportUrl": null,
   "trust": {
-    "developerId": false,
+    "developerId": true,
     "notarized": false,
     "stapled": false,
     "gatekeeper": false
