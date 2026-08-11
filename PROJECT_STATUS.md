@@ -36,6 +36,10 @@ frame-perfect editing.
   resources and icon, hardened-runtime Developer ID signing support, and a
   fail-closed notarization helper. Public distribution remains pending Apple
   signing credentials and a declared release channel.
+- 2026-08-11 — Shipped the repository-owned informational product site to
+  `local-ai-video-studio.pages.dev` from verified `main`, with real native
+  evidence, privacy and system details, release-state metadata, and a
+  fail-closed direct-download gate.
 - 2026-08-10 — Added deterministic timeline-segment split, trim, and removal
   through the shared validated graph and headless agent interface.
 - 2026-08-09 — Added the headless `studio-agent` executable over the same
@@ -51,12 +55,18 @@ frame-perfect editing.
 - Local macOS video-effects application.
 - Locally packaged `dist/Local AI Video Studio.app`; no public download channel
   is currently declared.
+- Dependency-free informational product site live at
+  `https://local-ai-video-studio.pages.dev` and maintained from `site/`.
 
 ## Features (shipped)
 
 - Repeatable local Release bundle assembly with versioned metadata, embedded
   SwiftPM resources and icon, hardened-runtime signing support, strict
   signature verification, and fail-closed Apple notarization checks.
+- Verified public informational surface with real native product evidence,
+  local-data disclosure, hardware and macOS requirements, version/build
+  identity, support readiness, repository-owned manual Pages deployment, and
+  release metadata that cannot expose an untrusted Mac binary.
 - Strict versioned effect graphs with validation, compatibility resolution,
   cost estimation, canonical hashing, and local project persistence.
 - Apple on-device prompt planning when available with deterministic local
