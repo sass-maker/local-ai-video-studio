@@ -40,6 +40,10 @@ frame-perfect editing.
   `local-ai-video-studio.pages.dev` from verified `main`, with real native
   evidence, privacy and system details, release-state metadata, and a
   fail-closed direct-download gate.
+- 2026-08-11 — The informational site adopted
+  `local-ai-video-studio.sassmaker.com` as its product-owned canonical
+  hostname while retaining `local-ai-video-studio.pages.dev` as the Cloudflare
+  provider origin.
 - 2026-08-10 — Added deterministic timeline-segment split, trim, and removal
   through the shared validated graph and headless agent interface.
 - 2026-08-09 — Added the headless `studio-agent` executable over the same
@@ -56,7 +60,9 @@ frame-perfect editing.
 - Locally packaged `dist/Local AI Video Studio.app`; no public download channel
   is currently declared.
 - Dependency-free informational product site live at
-  `https://local-ai-video-studio.pages.dev` and maintained from `site/`.
+  `https://local-ai-video-studio.sassmaker.com` and maintained from `site/`;
+  the `local-ai-video-studio.pages.dev` provider origin remains available as a
+  fallback.
 
 ## Features (shipped)
 
