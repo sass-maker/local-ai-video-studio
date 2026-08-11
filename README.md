@@ -69,6 +69,23 @@ swift build
 swift test
 ```
 
+## Prepare a Mac application
+
+Create a local Release bundle with the app icon and SwiftPM resources embedded:
+
+```bash
+./scripts/package-app.sh release
+```
+
+The default build is ad-hoc signed for local verification. When a personal
+Developer ID Application certificate is installed, pass its complete Keychain
+identity through `LOCAL_VIDEO_STUDIO_SIGNING_IDENTITY`; the script enables the
+hardened runtime and timestamp required for direct distribution. The separate
+`scripts/notarize-app.sh` helper fails closed unless the bundle has that
+Developer ID signature and `LOCAL_VIDEO_STUDIO_NOTARY_PROFILE` names an existing
+`notarytool` Keychain profile. Neither script publishes the app or creates a
+store record.
+
 The tests include strict schema validation, deterministic graph hashing, project persistence, batch failure isolation and cancellation, plus a real AVFoundation fixture render.
 
 ## Privacy and storage
