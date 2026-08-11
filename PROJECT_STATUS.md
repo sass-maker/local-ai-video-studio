@@ -32,6 +32,10 @@ frame-perfect editing.
 
 ## Timeline
 
+- 2026-08-11 — Added repeatable arm64 Release app packaging with embedded
+  resources and icon, hardened-runtime Developer ID signing support, and a
+  fail-closed notarization helper. Public distribution remains pending Apple
+  signing credentials and a declared release channel.
 - 2026-08-10 — Added deterministic timeline-segment split, trim, and removal
   through the shared validated graph and headless agent interface.
 - 2026-08-09 — Added the headless `studio-agent` executable over the same
@@ -45,9 +49,14 @@ frame-perfect editing.
 ## Products
 
 - Local macOS video-effects application.
+- Locally packaged `dist/Local AI Video Studio.app`; no public download channel
+  is currently declared.
 
 ## Features (shipped)
 
+- Repeatable local Release bundle assembly with versioned metadata, embedded
+  SwiftPM resources and icon, hardened-runtime signing support, strict
+  signature verification, and fail-closed Apple notarization checks.
 - Strict versioned effect graphs with validation, compatibility resolution,
   cost estimation, canonical hashing, and local project persistence.
 - Apple on-device prompt planning when available with deterministic local
