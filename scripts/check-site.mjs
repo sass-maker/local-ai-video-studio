@@ -6,7 +6,7 @@ const requiredFiles = [
   "site/index.html",
   "site/styles.css",
   "site/release.json",
-  "Sources/StudioApp/Resources/AppIcon.png",
+  "site/assets/favicon.png",
   "site/assets/studio-rendered.jpg",
   "site/assets/studio-catalog.jpg",
 ];
