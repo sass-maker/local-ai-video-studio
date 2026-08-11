@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050606">
+    <meta name="description" content="Local AI Video Studio turns one clip and one editing intent into inspectable, reproducible video studies on your Mac.">
+    <title>Local AI Video Studio — compare the edit before you commit</title>
+    <link rel="icon" href="../Sources/StudioApp/Resources/AppIcon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to the studio</a>
+
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="wordmark" href="#top" aria-label="Local AI Video Studio home">
+        <span>Local Video Studio</span>
+        <small>AI · on device</small>
+      </a>
+      <nav aria-label="Product">
+        <a href="#workflow">Workflow</a>
+        <a href="#system">System</a>
+        <a href="#release">Release</a>
+      </nav>
+      <a class="header-status" href="#release"><span aria-hidden="true"></span> Mac preview</a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Optical Printer Bench · local / offline</p>
+          <h1 id="hero-title">Compare the edit<br>before you commit.</h1>
+          <p class="lede">Turn one clip and one editing intent into two to five reproducible studies. Inspect the exact graph difference, move every take with one playhead, and export only the one you choose.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#bench">See the comparison bench</a>
+            <a class="text-link" href="#release">Distribution status <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+
+        <div class="hero-specimen" aria-label="Three study workflow">
+          <div class="source-slip">
+            <span>Source 01</span>
+            <strong>One local clip</strong>
+            <code>1920×1080 · 23.98</code>
+          </div>
+          <div class="study-strip">
+            <article>
+              <span>A</span>
+              <div class="frame cel" aria-hidden="true"><i></i><b></b></div>
+              <strong>Cel study</strong>
+              <code>style.cel 0.68</code>
+            </article>
+            <article>
+              <span>B</span>
+              <div class="frame ink" aria-hidden="true"><i></i><b></b></div>
+              <strong>Comic ink</strong>
+              <code>style.comic 0.78</code>
+            </article>
+            <article>
+              <span>C</span>
+              <div class="frame clean" aria-hidden="true"><i></i><b></b></div>
+              <strong>Clean pulse</strong>
+              <code>background.replace</code>
+            </article>
+          </div>
+          <div class="probe-strip">
+            <span>Shared probe</span>
+            <div aria-hidden="true"><i></i></div>
+            <code>00:02.18</code>
+          </div>
+        </div>
+      </section>
+
+      <section class="bench" id="bench" aria-labelledby="bench-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">The actual Mac application</p>
+            <h2 id="bench-title">One bench.<br>Equal studies.</h2>
+          </div>
+          <p>Media stays larger than the controls. Every approximation and fallback is disclosed beside the affected result, and the difference report names the exact normalized graph parameters.</p>
+        </div>
+        <figure class="product-window">
+          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>Optical Printer Bench</span><b>Local / Offline</b></div>
+          <img src="assets/studio-rendered.jpg" width="2972" height="1892" decoding="async" alt="Local AI Video Studio comparing three rendered vertical video variants with their disclosed fallbacks and a shared graph difference report.">
+          <figcaption>Real native interface · rendered local studies · warnings remain visible</figcaption>
+        </figure>
+      </section>
+
+      <section class="workflow" id="workflow" aria-labelledby="workflow-title">
+        <div class="workflow-title">
+          <p class="eyebrow">A bounded editing loop</p>
+          <h2 id="workflow-title">Intent becomes an inspectable graph.</h2>
+        </div>
+        <ol class="workflow-steps">
+          <li>
+            <span>01 / Import</span>
+            <h3>Bring one MP4 or MOV.</h3>
+            <p>The source stays on your Mac. Project state is ordinary JSON; preview files use the system temporary directory.</p>
+          </li>
+          <li>
+            <span>02 / Plan</span>
+            <h3>State the treatment.</h3>
+            <p>Apple’s on-device model is preferred when available. A deterministic local planner remains the visible fallback.</p>
+          </li>
+          <li>
+            <span>03 / Compare</span>
+            <h3>Move every take together.</h3>
+            <p>Two to five variants share playback and probe time. Blind labels help you choose the image, not the name.</p>
+          </li>
+          <li>
+            <span>04 / Export</span>
+            <h3>Commit one reproducible result.</h3>
+            <p>Export unlocks only when the selected preview matches the current validated graph revision.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="system" id="system" aria-labelledby="system-title">
+        <div class="catalog-figure">
+          <img src="assets/studio-catalog.jpg" width="2972" height="1892" decoding="async" alt="The native dark Local AI Video Studio effect catalog and three-study comparison workspace.">
+        </div>
+        <div class="system-copy">
+          <p class="eyebrow">Strict by construction</p>
+          <h2 id="system-title">AI proposes.<br>The graph decides.</h2>
+          <p>The planner can only use a registered, versioned effect schema. Unknown fields and executable inputs fail closed. Unsupported effects are rejected or routed through a disclosed fallback without hiding the rest of a usable study.</p>
+          <dl>
+            <div><dt>23</dt><dd>registered native effects</dd></div>
+            <div><dt>2–5</dt><dd>comparable studies per plan</dd></div>
+            <div><dt>0</dt><dd>accounts, telemetry, or cloud runtimes required</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="release" id="release" aria-labelledby="release-title">
+        <div class="release-heading">
+          <p class="eyebrow">Release desk · 0.1.0 (1)</p>
+          <h2 id="release-title">The app is built.<br>The download is not open.</h2>
+          <p>The current local package is for verification only. Public distribution remains closed until Developer ID signing, Apple notarization, ticket stapling, Gatekeeper assessment, SHA-256 verification, and a support contact all pass.</p>
+          <span class="release-button" aria-disabled="true">Distribution build in preparation</span>
+        </div>
+        <dl class="release-ledger" aria-label="Local AI Video Studio requirements and privacy">
+          <div><dt>Hardware</dt><dd>Apple silicon Mac</dd><dd class="detail">16 GB unified memory recommended.</dd></div>
+          <div><dt>System</dt><dd>macOS 14 or newer</dd><dd class="detail">On-device prompt planning requires macOS 26 when available.</dd></div>
+          <div><dt>Privacy</dt><dd>Local and offline</dd><dd class="detail">No account, cloud service, telemetry, or external runtime is required.</dd></div>
+          <div><dt>Support</dt><dd>Contact pending</dd><dd class="detail">A direct support address will appear before signed distribution begins.</dd></div>
+        </dl>
+      </section>
+    </main>
+
+    <footer>
+      <a class="wordmark" href="#top"><span>Local Video Studio</span><small>AI · on device</small></a>
+      <p>Private media stays on your Mac. <a href="#release">Privacy and release status</a></p>
+      <p>© 2026</p>
+    </footer>
+  </body>
+</html>
