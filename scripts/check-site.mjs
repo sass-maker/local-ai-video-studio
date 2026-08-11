@@ -16,6 +16,8 @@ await Promise.all(requiredFiles.map((file) => access(resolve(root, file))));
 const html = await readFile(resolve(root, "site/index.html"), "utf8");
 const release = JSON.parse(await readFile(resolve(root, "site/release.json"), "utf8"));
 const requiredCopy = [
+  '<link rel="canonical" href="https://local-ai-video-studio.sassmaker.com/">',
+  '<meta property="og:url" content="https://local-ai-video-studio.sassmaker.com/">',
   "Apple silicon Mac",
   "macOS 14 or newer",
   "Local and offline",
