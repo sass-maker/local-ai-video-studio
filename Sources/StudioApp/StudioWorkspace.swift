@@ -946,7 +946,7 @@ private struct PlaybackRail: View {
             .keyboardShortcut(.space, modifiers: [])
             .accessibilityLabel(model.isPlaying ? "Pause all variants" : "Play all variants")
             Text(timecode(model.sharedTime)).font(.caption.monospaced())
-            Slider(value: Binding(get: { model.sharedTime }, set: model.seekAll), in: 0...max(model.duration, 0.01))
+            Slider(value: Binding(get: { model.sharedTime }, set: { model.seekAll(to: $0) }), in: 0...max(model.duration, 0.01))
                 .tint(StudioPalette.probe)
                 .accessibilityLabel("Shared playhead")
                 .accessibilityValue(timecode(model.sharedTime))
