@@ -14,9 +14,7 @@ concurrency:
 
 jobs:
   quality:
-    # Xcode 16 / Swift 6 is the product's supported toolchain. Xcode 26.6
-    # currently crashes while coverage-instrumenting StudioWorkspace.swift.
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6

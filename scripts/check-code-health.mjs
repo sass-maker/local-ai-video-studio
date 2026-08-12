@@ -18,6 +18,7 @@ function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
     cwd: projectRoot,
     encoding: "utf8",
+    env: { ...process.env, ...options.env },
     maxBuffer: 64 * 1024 * 1024,
   });
   if (result.error) throw result.error;
@@ -82,7 +83,13 @@ function checkFormat() {
 }
 
 function checkCoverage() {
-  const testResult = run("swift", ["test", "--enable-code-coverage"]);
+  const coverageEnvironment = { FLEET_CODE_HEALTH_COVERAGE: "1" };
+  const scratch = mkdtempSync(join(tmpdir(), "local-video-studio-coverage-"));
+  const testResult = run(
+    "swift",
+    ["test", "--enable-code-coverage", "--scratch-path", scratch],
+    { env: coverageEnvironment },
+  );
   const testOutput = `${testResult.stdout}\n${testResult.stderr}`;
   const swiftTestingCounts = [
     ...testOutput.matchAll(/Test run with (\d+) tests/gu),
@@ -95,7 +102,11 @@ function checkCoverage() {
     Math.max(0, ...xctestCounts);
   checkMinimums("Tests", { tests }, { tests: 43 });
 
-  const pathResult = run("swift", ["test", "--show-codecov-path"]);
+  const pathResult = run(
+    "swift",
+    ["test", "--show-codecov-path", "--scratch-path", scratch],
+    { env: coverageEnvironment },
+  );
   const report = JSON.parse(readFileSync(pathResult.stdout.trim(), "utf8"));
   const files = report.data[0].files.filter((file) =>
     /\/Sources\/(StudioCore|MediaEngine)\//u.test(file.filename),
