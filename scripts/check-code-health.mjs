@@ -80,7 +80,12 @@ function checkFormat() {
   );
   const diagnostics = `${result.stdout}\n${result.stderr}`
     .split("\n")
-    .filter((line) => line.includes("error:")).length;
+    .filter((line) => /(?:warning|error):/u.test(line)).length;
+  if (result.status !== 0 && diagnostics === 0) {
+    process.stdout.write(result.stdout ?? "");
+    process.stderr.write(result.stderr ?? "");
+    throw new Error("swift-format failed without producing diagnostics");
+  }
   log(`Swift format debt: ${diagnostics} diagnostics.`);
   // Ratcheted legacy debt: https://github.com/sass-maker/local-ai-video-studio/issues/16
   failRegressions("Swift format", { diagnostics }, { diagnostics: 4882 });

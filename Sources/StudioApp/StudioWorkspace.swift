@@ -712,7 +712,7 @@ private struct VariantStudy: View {
     let manifest: RenderManifest?
     let onSelect: () -> Void
     let onToggleSaved: () -> Void
-    let onStrength: @MainActor @Sendable (Double) -> Void
+    let onStrength: (Double) -> Void
     let onRerender: () -> Void
 
     private var styleStrength: Double {
@@ -841,9 +841,9 @@ private struct PlanInspector: View {
 
 private struct StrengthControl: View {
     @State private var draft: Double
-    let onCommit: @MainActor @Sendable (Double) -> Void
+    let onCommit: (Double) -> Void
 
-    init(value: Double, onCommit: @escaping @MainActor @Sendable (Double) -> Void) {
+    init(value: Double, onCommit: @escaping (Double) -> Void) {
         _draft = State(initialValue: value)
         self.onCommit = onCommit
     }
