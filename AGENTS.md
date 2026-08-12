@@ -13,7 +13,8 @@
 
 - Stack: Swift 6, SwiftUI, AVFoundation, Core Image, XCTest
 - Local dev: `swift run LocalVideoStudio`
-- Checks: `swift test` then `swift build`
+- Checks: `node scripts/check-code-health.mjs all`; use a narrower selector such
+  as `coverage`, `build`, `unused`, or `site` while iterating.
 - Platform: macOS 14+ on Apple Silicon
 
 ## Boundaries
@@ -38,6 +39,13 @@
 - Surface planner provenance, graph hashes, fallback reasons, estimated cost,
   and artifact paths in machine-readable results.
 - Never allow a model to execute shell commands or arbitrary code.
+
+## Code health
+
+- Keep the checked-in quality baselines non-regressing. When a metric improves,
+  lower its ceiling or raise its floor in the same change.
+- Do not introduce inline lint or coverage suppressions. Durable cleanup belongs
+  in GitHub issue #16 rather than source TODOs.
 
 ## Visual work
 

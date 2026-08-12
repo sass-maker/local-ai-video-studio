@@ -1,6 +1,5 @@
 import AppKit
 import AVKit
-import MediaEngine
 import StudioCore
 import SwiftUI
 import UniformTypeIdentifiers
@@ -713,7 +712,7 @@ private struct VariantStudy: View {
     let manifest: RenderManifest?
     let onSelect: () -> Void
     let onToggleSaved: () -> Void
-    let onStrength: @MainActor @Sendable (Double) -> Void
+    let onStrength: (Double) -> Void
     let onRerender: () -> Void
 
     private var styleStrength: Double {
@@ -842,9 +841,9 @@ private struct PlanInspector: View {
 
 private struct StrengthControl: View {
     @State private var draft: Double
-    let onCommit: @MainActor @Sendable (Double) -> Void
+    let onCommit: (Double) -> Void
 
-    init(value: Double, onCommit: @escaping @MainActor @Sendable (Double) -> Void) {
+    init(value: Double, onCommit: @escaping (Double) -> Void) {
         _draft = State(initialValue: value)
         self.onCommit = onCommit
     }
@@ -947,7 +946,7 @@ private struct PlaybackRail: View {
             .keyboardShortcut(.space, modifiers: [])
             .accessibilityLabel(model.isPlaying ? "Pause all variants" : "Play all variants")
             Text(timecode(model.sharedTime)).font(.caption.monospaced())
-            Slider(value: Binding(get: { model.sharedTime }, set: model.seekAll), in: 0...max(model.duration, 0.01))
+            Slider(value: Binding(get: { model.sharedTime }, set: { model.seekAll(to: $0) }), in: 0...max(model.duration, 0.01))
                 .tint(StudioPalette.probe)
                 .accessibilityLabel("Shared playhead")
                 .accessibilityValue(timecode(model.sharedTime))
