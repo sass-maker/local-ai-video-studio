@@ -1,6 +1,5 @@
 import AppKit
 import AVKit
-import MediaEngine
 import StudioCore
 import SwiftUI
 import UniformTypeIdentifiers

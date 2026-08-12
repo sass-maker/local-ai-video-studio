@@ -352,12 +352,6 @@ final class StudioViewModel: ObservableObject {
         }
     }
 
-    func hasEffect(_ type: EffectType, in variantID: UUID? = nil) -> Bool {
-        let id = variantID ?? selectedID
-        return variants.first(where: { $0.graph.id == id })?.graph.timeline
-            .flatMap(\.effects).contains(where: { $0.type == type }) == true
-    }
-
     func addEffect(_ type: EffectType, toAllVariants: Bool) {
         editGraphs(toAllVariants: toAllVariants, action: "Added \(type.displayName)") { graph in
             try graphEditor.adding(type, to: graph)

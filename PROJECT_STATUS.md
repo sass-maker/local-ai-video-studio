@@ -32,6 +32,9 @@ frame-perfect editing.
 
 ## Timeline
 
+- 2026-08-12 — Adopted the Fleet native code-health gate with 43 tests,
+  StudioCore and MediaEngine coverage floors, zero unused-code and suppression
+  tolerance, and ratcheted formatter, complexity, and duplication baselines.
 - 2026-08-11 — Added repeatable arm64 Release app packaging with embedded
   resources and icon, hardened-runtime Developer ID signing support, and a
   fail-closed notarization helper. Public distribution remains pending Apple
@@ -66,6 +69,9 @@ frame-perfect editing.
 
 ## Features (shipped)
 
+- Repository-owned native quality automation covering tests, library coverage,
+  Swift build and dependency health, unused code, complexity, duplication,
+  suppressions, repository hygiene, and the static informational site.
 - Repeatable local Release bundle assembly with versioned metadata, embedded
   SwiftPM resources and icon, hardened-runtime signing support, strict
   signature verification, and fail-closed Apple notarization checks.

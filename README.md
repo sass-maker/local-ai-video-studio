@@ -65,9 +65,16 @@ the separate **Plan & Render Previews** or **Rerender Changed Studies** action.
 ## Validate
 
 ```bash
-swift build
-swift test
+node scripts/check-code-health.mjs all
 ```
+
+The gate runs 43 native tests, measures StudioCore and MediaEngine coverage,
+builds every SwiftPM target, checks unused code, complexity, exact duplication,
+the dependency graph, suppressions, repository hygiene, and the static site.
+Existing formatter, complexity, duplication, and coverage gaps are ratcheted to
+[issue #16](https://github.com/sass-maker/local-ai-video-studio/issues/16): a
+change may improve those baselines, but may not make them worse. Run a narrower
+selector such as `coverage`, `build`, `unused`, or `site` while iterating.
 
 ## Prepare a Mac application
 
