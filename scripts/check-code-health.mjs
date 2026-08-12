@@ -69,9 +69,13 @@ function checkMinimums(label, observed, minimums) {
 }
 
 function checkFormat() {
+  const xcrunLookup = run("xcrun", ["-f", "swift-format"], {
+    allowFailure: true,
+  });
+  const swiftFormat = xcrunLookup.stdout.trim() || "swift-format";
   const result = run(
-    "xcrun",
-    ["swift-format", "lint", "--strict", "--recursive", "Sources", "Tests"],
+    swiftFormat,
+    ["lint", "--strict", "--recursive", "Sources", "Tests"],
     { allowFailure: true },
   );
   const diagnostics = `${result.stdout}\n${result.stderr}`

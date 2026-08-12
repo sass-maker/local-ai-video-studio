@@ -39,7 +39,7 @@ public struct StudioAgentService: Sendable {
 
     public init() {}
 
-    public func run(_ raw: Any) async throws -> [String: Any] {
+    public func run(_ raw: Any) async throws -> sending [String: Any] {
         let request = try normalize(raw)
         let operation = request.operation
         let startedAt = Self.timestamp()

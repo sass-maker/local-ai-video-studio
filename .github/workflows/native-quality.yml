@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   quality:
-    runs-on: macos-26
+    runs-on: macos-15
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
@@ -23,7 +23,7 @@ jobs:
           node-version: 24
           package-manager-cache: false
       - uses: astral-sh/setup-uv@v8.1.0
-      - name: Install Swift unused-code analyzer
-        run: brew install periphery
+      - name: Install native analyzers
+        run: brew install periphery swift-format
       - name: Run native and site quality gates
         run: node scripts/check-code-health.mjs all
