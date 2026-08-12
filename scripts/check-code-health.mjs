@@ -134,9 +134,9 @@ function checkCoverage() {
   );
   // Ratcheted debt and unreported targets: https://github.com/sass-maker/local-ai-video-studio/issues/16
   checkMinimums("StudioCore + MediaEngine coverage", observed, {
-    lines: 82,
-    functions: 76,
-    regions: 69,
+    lines: 85,
+    functions: 78,
+    regions: 70,
   });
 }
 
