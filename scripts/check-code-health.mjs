@@ -88,7 +88,7 @@ function checkFormat() {
   }
   log(`Swift format debt: ${diagnostics} diagnostics.`);
   // Ratcheted legacy debt: https://github.com/sass-maker/local-ai-video-studio/issues/16
-  failRegressions("Swift format", { diagnostics }, { diagnostics: 4882 });
+  failRegressions("Swift format", { diagnostics }, { diagnostics: 4377 });
 }
 
 function checkCoverage() {
@@ -109,7 +109,7 @@ function checkCoverage() {
   const tests =
     swiftTestingCounts.reduce((total, count) => total + count, 0) +
     Math.max(0, ...xctestCounts);
-  checkMinimums("Tests", { tests }, { tests: 43 });
+  checkMinimums("Tests", { tests }, { tests: 46 });
 
   const pathResult = run(
     "swift",
@@ -134,9 +134,9 @@ function checkCoverage() {
   );
   // Ratcheted debt and unreported targets: https://github.com/sass-maker/local-ai-video-studio/issues/16
   checkMinimums("StudioCore + MediaEngine coverage", observed, {
-    lines: 85,
-    functions: 78,
-    regions: 70,
+    lines: 85.5,
+    functions: 83,
+    regions: 75,
   });
 }
 
@@ -208,8 +208,8 @@ function checkComplexity() {
   );
   // Ratcheted legacy debt: https://github.com/sass-maker/local-ai-video-studio/issues/16
   failRegressions("Complexity", observed, {
-    violations: 5,
-    maxCcn: 26,
+    violations: 4,
+    maxCcn: 14,
     maxLength: 90,
     maxParams: 12,
   });
@@ -250,7 +250,7 @@ function checkDuplication() {
   failRegressions("Duplication", observed, {
     clones: 3,
     duplicatedLines: 27,
-    percentage: 0.6299580027998133,
+    percentage: 0.6209751609935602,
   });
 }
 
