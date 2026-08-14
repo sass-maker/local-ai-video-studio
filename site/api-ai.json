@@ -1,0 +1,38 @@
+{
+  "name": "Local AI Video Studio",
+  "version": "1",
+  "url": "https://local-ai-video-studio.sassmaker.com",
+  "llms": "https://local-ai-video-studio.sassmaker.com/llms.txt",
+  "llmsFull": "https://local-ai-video-studio.sassmaker.com/llms-full.txt",
+  "sitemap": "https://local-ai-video-studio.sassmaker.com/sitemap.xml",
+  "robots": "https://local-ai-video-studio.sassmaker.com/robots.txt",
+  "markdown": {
+    "suffix": ".md",
+    "negotiation": true
+  },
+  "searchIntents": [
+    {
+      "id": "local-ai-video-studio-brand",
+      "kind": "brand",
+      "query": "Local AI Video Studio sassmaker"
+    },
+    {
+      "id": "local-ai-video-studio-category",
+      "kind": "category",
+      "query": "local AI video effects studio for Mac"
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "home",
+      "url": "https://local-ai-video-studio.sassmaker.com/",
+      "md": "https://local-ai-video-studio.sassmaker.com/index.md",
+      "kind": "static",
+      "description": "Product home"
+    }
+  ],
+  "auth": {
+    "public": true,
+    "notes": "Auth-walled app routes are not agent-indexed unless listed here."
+  }
+}
