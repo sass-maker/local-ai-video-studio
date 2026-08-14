@@ -1,0 +1,15 @@
+# Local AI Video Studio
+
+> A local-first Mac studio for comparing reproducible video-effect variants before export.
+
+## Product
+
+- [Home](https://local-ai-video-studio.sassmaker.com/): Product workflow and release status
+- [System](https://local-ai-video-studio.sassmaker.com/#system): Local processing and validation boundary
+- [Release](https://local-ai-video-studio.sassmaker.com/#release): Distribution readiness and system requirements
+
+## Machine surfaces
+
+- [Agent catalog](https://local-ai-video-studio.sassmaker.com/api/ai): JSON inventory of public surfaces
+- [Homepage markdown](https://local-ai-video-studio.sassmaker.com/index.md): Product brief without JS
+- [This index](https://local-ai-video-studio.sassmaker.com/llms.txt)

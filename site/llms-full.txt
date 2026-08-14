@@ -1,0 +1,47 @@
+# Local AI Video Studio — full agent brief
+
+A local-first Mac studio for comparing reproducible video-effect variants before export.
+
+## Index
+
+# Local AI Video Studio
+
+A local-first Mac studio for comparing reproducible video-effect variants.
+
+## Product boundary
+
+- Media processing stays local and offline-capable
+- Editing intent becomes a validated, versioned effect graph
+- Two to five reproducible variants can be compared before export
+- Public download distribution is not yet open
+
+## Agent entrypoints
+
+- https://local-ai-video-studio.sassmaker.com/llms.txt
+- https://local-ai-video-studio.sassmaker.com/api/ai
+- https://local-ai-video-studio.sassmaker.com/index.md
+
+## Product links
+
+- Home: https://local-ai-video-studio.sassmaker.com/ — Product workflow and release status
+- System: https://local-ai-video-studio.sassmaker.com/#system — Local processing and validation boundary
+- Release: https://local-ai-video-studio.sassmaker.com/#release — Distribution readiness and system requirements
+
+## Tracked search intents
+
+- [brand] local-ai-video-studio-brand: Local AI Video Studio sassmaker
+- [category] local-ai-video-studio-category: local AI video effects studio for Mac
+
+## Machine surfaces
+
+- https://local-ai-video-studio.sassmaker.com/llms.txt
+- https://local-ai-video-studio.sassmaker.com/llms-full.txt
+- https://local-ai-video-studio.sassmaker.com/api/ai
+- https://local-ai-video-studio.sassmaker.com/index.md
+- https://local-ai-video-studio.sassmaker.com/sitemap.xml
+- https://local-ai-video-studio.sassmaker.com/robots.txt
+
+## Contact
+
+- Owner: https://sarthakagrawal.dev
+- Agent email for directory verification: sarthakagrawal@agentmail.to
