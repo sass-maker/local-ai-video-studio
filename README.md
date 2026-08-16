@@ -65,8 +65,12 @@ the separate **Plan & Render Previews** or **Rerender Changed Studies** action.
 ## Validate
 
 ```bash
-node scripts/check-code-health.mjs all
+npm run quality
 ```
+
+The same gate is `node scripts/check-code-health.mjs all`. Those commands remain
+authoritative; `package.json` only exposes them as `format:check`, `lint`,
+`typecheck`, `test`, `test:coverage`, and `quality:*` selectors.
 
 The gate runs 43 native tests, measures StudioCore and MediaEngine coverage,
 builds every SwiftPM target, checks unused code, complexity, exact duplication,

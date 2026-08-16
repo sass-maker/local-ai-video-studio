@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "node scripts/check-code-health.mjs build",
+    "check": "npm run quality",
+    "format:check": "node scripts/check-code-health.mjs format",
+    "knip": "node scripts/check-code-health.mjs unused",
+    "lint": "node scripts/check-code-health.mjs format",
+    "quality": "node scripts/check-code-health.mjs all",
+    "quality:build": "node scripts/check-code-health.mjs build",
+    "quality:complexity": "node scripts/check-code-health.mjs complexity",
+    "quality:coverage": "node scripts/check-code-health.mjs coverage",
+    "quality:dependencies": "node scripts/check-code-health.mjs dependencies",
+    "quality:duplication": "node scripts/check-code-health.mjs duplication",
+    "quality:format": "node scripts/check-code-health.mjs format",
+    "quality:hygiene": "node scripts/check-code-health.mjs hygiene",
+    "quality:site": "node scripts/check-code-health.mjs site",
+    "quality:suppressions": "node scripts/check-code-health.mjs suppressions",
+    "quality:unused": "node scripts/check-code-health.mjs unused",
+    "test": "node scripts/check-code-health.mjs coverage",
+    "test:coverage": "node scripts/check-code-health.mjs coverage",
+    "typecheck": "node scripts/check-code-health.mjs build"
+  }
+}
