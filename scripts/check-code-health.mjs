@@ -88,7 +88,7 @@ function checkFormat() {
   }
   log(`Swift format debt: ${diagnostics} diagnostics.`);
   // Ratcheted legacy debt: https://github.com/sass-maker/local-ai-video-studio/issues/16
-  failRegressions("Swift format", { diagnostics }, { diagnostics: 4377 });
+  failRegressions("Swift format", { diagnostics }, { diagnostics: 0 });
 }
 
 function checkCoverage() {
