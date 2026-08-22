@@ -121,3 +121,10 @@ paths. Generated effects are mapped through the registry and validated before
 rendering. If Apple Intelligence is unavailable or generation fails, the app
 uses the deterministic preset planner and discloses the fallback in **View
 Plan**.
+
+The disclosed reason is specific: model ineligibility, a disabled Apple
+Intelligence setting, a model that is not ready, a rejected unregistered
+effect, or a graph that failed validation. `studio-agent plan` reports the same
+truth as `planner`, `plannerKind`, and `fallbackReason`. Local-model planning is
+injectable, so the test suite exercises mapping, validation, and fallback with a
+fake model and never requires Apple Intelligence to be enabled.

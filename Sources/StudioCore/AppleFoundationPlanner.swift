@@ -7,6 +7,14 @@ import Foundation
 public enum LocalModelAvailability: Equatable, Sendable {
   case available
   case unavailable(String)
+
+  /// The actionable reason the on-device model cannot be used, if any.
+  public var unavailableReason: String? {
+    switch self {
+    case .available: nil
+    case .unavailable(let reason): reason
+    }
+  }
 }
 
 public enum GeneratedPlanMappingError: Error, Equatable, Sendable {
@@ -14,6 +22,20 @@ public enum GeneratedPlanMappingError: Error, Equatable, Sendable {
   case emptyLabel(Int)
   case emptyEffects(Int)
   case unsupportedEffect(String)
+
+  /// A short, human-readable explanation suitable for the app and agent output.
+  public var explanation: String {
+    switch self {
+    case .wrongVariantCount(let expected, let actual):
+      "the model returned \(actual) variants instead of \(expected)"
+    case .emptyLabel(let index):
+      "variant \(index + 1) had no label"
+    case .emptyEffects(let index):
+      "variant \(index + 1) contained no effects"
+    case .unsupportedEffect(let identifier):
+      "the model proposed the unsupported effect “\(identifier)”"
+    }
+  }
 }
 
 public struct GeneratedEffectDraft: Equatable, Sendable {
@@ -60,7 +82,12 @@ public struct GeneratedPlanDraft: Equatable, Sendable {
 }
 
 public struct GeneratedPlanMapper: Sendable {
-  public init() {}
+  public let provenance: PlannerProvenance
+
+  public init(modelIdentifier: String = appleFoundationModelIdentifier) {
+    provenance = PlannerProvenance(
+      kind: .localModel, name: modelIdentifier, version: "system")
+  }
 
   public func map(_ draft: GeneratedPlanDraft, for request: PlanningRequest) throws -> [EffectGraph]
   {
@@ -68,8 +95,6 @@ public struct GeneratedPlanMapper: Sendable {
       throw GeneratedPlanMappingError.wrongVariantCount(
         expected: request.variantCount, actual: draft.variants.count)
     }
-    let provenance = PlannerProvenance(
-      kind: .localModel, name: "apple-foundation-model", version: "system")
     return try draft.variants.enumerated().map { variantIndex, variant in
       let label = variant.label.trimmingCharacters(in: .whitespacesAndNewlines)
       guard !label.isEmpty else { throw GeneratedPlanMappingError.emptyLabel(variantIndex) }
@@ -108,24 +133,25 @@ public struct GeneratedPlanMapper: Sendable {
       .styleNoir, .styleVHS,
     ]
     if styleTypes.contains(type) || [.backgroundBlur, .outline, .glow].contains(type) {
-      return .init(strength: draft.strength)
+      return EffectParameters(strength: draft.strength)
     }
     if [.beatFlash, .beatZoom, .colorGrade].contains(type) {
-      return .init(intensity: draft.intensity)
+      return EffectParameters(intensity: draft.intensity)
     }
     switch type {
-    case .speed: return .init(rate: draft.rate)
-    case .transitionCrossfade: return .init(duration: draft.duration)
+    case .speed: return EffectParameters(rate: draft.rate)
+    case .transitionCrossfade: return EffectParameters(duration: draft.duration)
     case .backgroundReplace:
-      return .init(preset: draft.preset.isEmpty ? "soft_gradient" : draft.preset)
+      return EffectParameters(preset: draft.preset.isEmpty ? "soft_gradient" : draft.preset)
     case .captionDynamic:
-      return .init(
+      return EffectParameters(
         preset: draft.preset.isEmpty ? "bold" : draft.preset,
         text: draft.text.isEmpty ? nil : draft.text)
-    case .titleCard: return .init(text: draft.text.isEmpty ? "WATCH THIS" : draft.text)
+    case .titleCard:
+      return EffectParameters(text: draft.text.isEmpty ? "WATCH THIS" : draft.text)
     case .cropAutoSubject:
-      return .init(target: draft.target.isEmpty ? "primary_person" : draft.target)
-    default: return .init()
+      return EffectParameters(target: draft.target.isEmpty ? "primary_person" : draft.target)
+    default: return EffectParameters()
     }
   }
 
@@ -135,16 +161,52 @@ public struct GeneratedPlanMapper: Sendable {
   }
 }
 
+/// The stable identifier recorded as planner provenance for Apple's on-device model.
+public let appleFoundationModelIdentifier = "apple-foundation-model"
+
+/// The injectable seam for a local model that produces guided plan drafts.
+///
+/// Production uses Apple's `SystemLanguageModel`; tests inject a fake so the
+/// suite never depends on Apple Intelligence being enabled.
+public protocol GeneratedPlanProducing: Sendable {
+  var modelIdentifier: String { get }
+  func generatePlan(_ request: PlanningRequest) async throws -> GeneratedPlanDraft
+}
+
+/// Which planner produced a plan, and why a fallback happened when it did.
+public struct PlanningDisclosure: Equatable, Sendable {
+  public var provenance: PlannerProvenance
+  public var fallbackReason: String?
+
+  public init(provenance: PlannerProvenance, fallbackReason: String? = nil) {
+    self.provenance = provenance
+    self.fallbackReason = fallbackReason
+  }
+}
+
+public struct PlanningOutcome: Equatable, Sendable {
+  public var graphs: [EffectGraph]
+  public var disclosure: PlanningDisclosure
+
+  public init(graphs: [EffectGraph], disclosure: PlanningDisclosure) {
+    self.graphs = graphs
+    self.disclosure = disclosure
+  }
+}
+
 public struct PreferredVariantPlanner: VariantPlanning {
   private let fallback: DeterministicDemoPlanner
-  private let primaryOverride: (@Sendable (PlanningRequest) async throws -> [EffectGraph])?
+  private let model: GeneratedPlanProducing?
+  private let validator: EffectGraphValidator
 
   public init(
-    fallback: DeterministicDemoPlanner = .init(),
-    primaryOverride: (@Sendable (PlanningRequest) async throws -> [EffectGraph])? = nil
+    fallback: DeterministicDemoPlanner = DeterministicDemoPlanner(),
+    model: GeneratedPlanProducing? = nil,
+    validator: EffectGraphValidator = EffectGraphValidator()
   ) {
     self.fallback = fallback
-    self.primaryOverride = primaryOverride
+    self.model = model
+    self.validator = validator
   }
 
   public static var availability: LocalModelAvailability {
@@ -168,21 +230,63 @@ public struct PreferredVariantPlanner: VariantPlanning {
   }
 
   public func plan(_ request: PlanningRequest) async throws -> [EffectGraph] {
-    if let primaryOverride {
-      do { return try await primaryOverride(request) } catch {
-        return try await fallback.plan(request)
-      }
+    try await planDisclosed(request).graphs
+  }
+
+  /// Plans variants and reports which planner produced them.
+  ///
+  /// The local model is preferred whenever it is reachable. Generation,
+  /// registry mapping, or validation failures fall back exactly once to the
+  /// deterministic planner and carry an actionable reason.
+  public func planDisclosed(_ request: PlanningRequest) async throws -> PlanningOutcome {
+    guard (2...5).contains(request.variantCount) else {
+      throw PlanningError.variantCountOutOfRange
     }
+    guard let model = resolvedModel() else {
+      return try await fallbackOutcome(request, reason: Self.availability.unavailableReason)
+    }
+    do {
+      let mapper = GeneratedPlanMapper(modelIdentifier: model.modelIdentifier)
+      let draft = try await model.generatePlan(request)
+      let graphs = try mapper.map(draft, for: request).map { try validator.validate($0).graph }
+      return PlanningOutcome(
+        graphs: graphs, disclosure: PlanningDisclosure(provenance: mapper.provenance))
+    } catch {
+      return try await fallbackOutcome(request, reason: Self.reason(for: error))
+    }
+  }
+
+  private func resolvedModel() -> GeneratedPlanProducing? {
+    if let model { return model }
     #if canImport(FoundationModels)
       if #available(macOS 26.0, *), SystemLanguageModel.default.isAvailable {
-        do {
-          return try await AppleFoundationPlanGenerator().plan(request)
-        } catch {
-          return try await fallback.plan(request)
-        }
+        return AppleFoundationModel()
       }
     #endif
-    return try await fallback.plan(request)
+    return nil
+  }
+
+  private func fallbackOutcome(_ request: PlanningRequest, reason: String?) async throws
+    -> PlanningOutcome
+  {
+    let graphs = try await fallback.plan(request)
+    let provenance =
+      graphs.first?.provenance
+      ?? PlannerProvenance(kind: .deterministicDemo, name: "milestone-preset-planner", version: "0")
+    return PlanningOutcome(
+      graphs: graphs,
+      disclosure: PlanningDisclosure(provenance: provenance, fallbackReason: reason))
+  }
+
+  private static func reason(for error: Error) -> String {
+    if let mapping = error as? GeneratedPlanMappingError {
+      return "Rejected the generated plan because \(mapping.explanation)."
+    }
+    if let validation = error as? GraphValidationFailure {
+      let detail = validation.diagnostics.first.map { "\($0.path): \($0.message)" } ?? "unknown"
+      return "The generated plan failed graph validation (\(detail))."
+    }
+    return "Apple’s on-device model could not produce a plan (\(error.localizedDescription))."
   }
 }
 
@@ -223,8 +327,10 @@ public struct PreferredVariantPlanner: VariantPlanning {
   }
 
   @available(macOS 26.0, *)
-  private struct AppleFoundationPlanGenerator {
-    func plan(_ request: PlanningRequest) async throws -> [EffectGraph] {
+  private struct AppleFoundationModel: GeneratedPlanProducing {
+    let modelIdentifier = appleFoundationModelIdentifier
+
+    func generatePlan(_ request: PlanningRequest) async throws -> GeneratedPlanDraft {
       let supported = EffectType.allCases.map(\.rawValue).joined(separator: ", ")
       let session = LanguageModelSession(
         instructions: """
@@ -243,7 +349,7 @@ public struct PreferredVariantPlanner: VariantPlanning {
           """,
         generating: AppleGeneratedPlan.self
       )
-      let draft = GeneratedPlanDraft(
+      return GeneratedPlanDraft(
         variants: response.content.variants.map { variant in
           GeneratedVariantDraft(
             label: variant.label, summary: variant.summary,
@@ -254,9 +360,6 @@ public struct PreferredVariantPlanner: VariantPlanning {
                 text: effect.text, target: effect.target)
             })
         })
-      let mapped = try GeneratedPlanMapper().map(draft, for: request)
-      let validator = EffectGraphValidator()
-      return try mapped.map { try validator.validate($0).graph }
     }
   }
 #endif
