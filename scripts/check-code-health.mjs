@@ -109,7 +109,7 @@ function checkCoverage() {
   const tests =
     swiftTestingCounts.reduce((total, count) => total + count, 0) +
     Math.max(0, ...xctestCounts);
-  checkMinimums("Tests", { tests }, { tests: 46 });
+  checkMinimums("Tests", { tests }, { tests: 57 });
 
   const pathResult = run(
     "swift",

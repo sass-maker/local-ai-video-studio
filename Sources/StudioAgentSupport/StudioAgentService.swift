@@ -32,12 +32,16 @@ public struct StudioAgentService: Sendable {
   ]
 
   private let analyzer = MediaAnalyzer()
-  private let planner = PreferredVariantPlanner()
+  private let planner: PreferredVariantPlanner
   private let validator = EffectGraphValidator()
   private let editor = EffectGraphEditor()
   private let store = ProjectStore()
 
-  public init() {}
+  /// - Parameter planner: injectable so tests can supply a fake local model
+  ///   instead of depending on Apple Intelligence being enabled.
+  public init(planner: PreferredVariantPlanner = .init()) {
+    self.planner = planner
+  }
 
   public func run(_ raw: Any) async throws -> sending [String: Any] {
     let request = try normalize(raw)
@@ -83,11 +87,14 @@ public struct StudioAgentService: Sendable {
         height: try optionalInt(request.input, "height", default: 1920),
         fps: try optionalInt(request.input, "fps", default: 24)
       )
-      let graphs = try await planner.plan(
+      let outcome = try await planner.planDisclosed(
         .init(instruction: instruction, variantCount: count, output: output, duration: duration))
-      let normalized = try graphs.map(validator.validate)
+      let normalized = try outcome.graphs.map(validator.validate)
+      let fallbackReason: Any = outcome.disclosure.fallbackReason ?? NSNull()
       result = [
-        "planner": Self.plannerDescription(graphs),
+        "planner": outcome.disclosure.provenance.name,
+        "plannerKind": outcome.disclosure.provenance.kind.rawValue,
+        "fallbackReason": fallbackReason,
         "variants": try normalized.map { try normalizedObject($0) },
       ]
       artifacts = []
@@ -479,10 +486,6 @@ public struct StudioAgentService: Sendable {
     case "plan", "edit": "plan"
     default: "read"
     }
-  }
-
-  private static func plannerDescription(_ graphs: [EffectGraph]) -> String {
-    graphs.first?.provenance.name ?? "unknown"
   }
 
   private static func timestamp() -> String { ISO8601DateFormatter().string(from: Date()) }

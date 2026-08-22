@@ -25,6 +25,7 @@ final class StudioViewModel: ObservableObject {
   @Published var driftedIDs: Set<UUID> = []
   @Published var message = "Import a local MP4 or MOV to begin."
   @Published var diagnostics: [GraphDiagnostic] = []
+  @Published var plannerDisclosure: PlanningDisclosure?
   @Published var isBusy = false
   @Published var isRendering = false
 
@@ -147,14 +148,15 @@ final class StudioViewModel: ObservableObject {
           output: OutputProfile(aspectRatio: .vertical, width: 1080, height: 1920, fps: 24),
           duration: source.metadata.duration
         )
-        let planned = try await planner.plan(request)
+        let outcome = try await planner.planDisclosed(request)
         guard self.planOperationID == operationID else { return }
-        let normalized = try planned.map(validator.validate)
+        let normalized = try outcome.graphs.map(validator.validate)
+        plannerDisclosure = outcome.disclosure
         variants = normalized
         diagnostics = normalized.flatMap(\.warnings)
         states = Dictionary(uniqueKeysWithValues: normalized.map { ($0.graph.id, .planned) })
         selectedID = normalized.first?.graph.id
-        message = "\(normalized.count) reproducible plans ready. Review warnings before rendering."
+        message = Self.planMessage(count: normalized.count, disclosure: outcome.disclosure)
         persistProject()
         shouldRender = renderAfterPlanning
       } catch let failure as GraphValidationFailure {
@@ -316,22 +318,36 @@ final class StudioViewModel: ObservableObject {
   }
 
   var plannerDescription: String {
-    if variants.first?.graph.provenance.kind == .localModel {
+    guard let plannerDisclosure else { return plannerAvailabilityDescription }
+    if plannerDisclosure.provenance.kind == .localModel {
       return "Apple Foundation Models · on-device · no video frames shared"
     }
-    switch PreferredVariantPlanner.availability {
-    case .available:
-      return "Deterministic fallback · Apple model generation was unavailable for this plan"
-    case .unavailable(let reason):
-      return "Deterministic fallback · \(reason)"
+    guard let reason = plannerDisclosure.fallbackReason else {
+      return "Deterministic preset fallback"
     }
+    return "Deterministic preset fallback · \(reason)"
   }
 
   var plannerAvailabilityDescription: String {
-    switch PreferredVariantPlanner.availability {
-    case .available: "Apple on-device prompt planner ready"
-    case .unavailable(let reason): "Preset planner active · \(reason)"
+    if let reason = plannerDisclosure?.fallbackReason {
+      return "Preset planner used for this plan · \(reason)"
     }
+    switch PreferredVariantPlanner.availability {
+    case .available: return "Apple on-device prompt planner ready"
+    case .unavailable(let reason): return "Preset planner active · \(reason)"
+    }
+  }
+
+  var isUsingLocalModelPlanner: Bool {
+    guard let plannerDisclosure else { return PreferredVariantPlanner.availability == .available }
+    return plannerDisclosure.provenance.kind == .localModel
+  }
+
+  private static func planMessage(count: Int, disclosure: PlanningDisclosure) -> String {
+    guard let reason = disclosure.fallbackReason else {
+      return "\(count) reproducible plans ready. Review warnings before rendering."
+    }
+    return "\(count) reproducible plans ready from the deterministic preset planner. \(reason)"
   }
 
   func select(_ id: UUID) {
