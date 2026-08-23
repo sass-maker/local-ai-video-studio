@@ -109,7 +109,7 @@ function checkCoverage() {
   const tests =
     swiftTestingCounts.reduce((total, count) => total + count, 0) +
     Math.max(0, ...xctestCounts);
-  checkMinimums("Tests", { tests }, { tests: 46 });
+  checkMinimums("Tests", { tests }, { tests: 60 });
 
   const pathResult = run(
     "swift",
@@ -132,15 +132,19 @@ function checkCoverage() {
     `Tests and library coverage: ${tests} tests; ${observed.lines.toFixed(4)}% lines, ` +
       `${observed.functions.toFixed(4)}% functions, ${observed.regions.toFixed(4)}% regions.`,
   );
-  // Re-baselined 2026-08-23 after the swift-format sweep in bdf14aa
-  // ("clear swift-format debt, 4377 -> 0 diagnostics") reflowed Sources.
-  // Reflowing changes physical line counts, so line coverage moved 85.5 ->
-  // 83.9844% without a single test being removed. lines was 85.5 before.
-  // Tracked in https://github.com/sass-maker/local-ai-video-studio/issues/29
+  // Restored 2026-08-23 (issue #29). The 2026-08-23 stopgap of 83.9 was set
+  // 0.08 under the then-observed 83.9844 after the bdf14aa swift-format sweep
+  // reflowed Sources; that margin was too thin to absorb ordinary source
+  // growth, so main silently regressed to 83.8606 and the lowered floor was
+  // itself breached. Real registry and estimator tests took lines to 86.2198,
+  // functions to 88.3534, and regions to 78.4810, so lines returns to its
+  // original 85.5 and the other two ratchet up. Each floor keeps deliberate
+  // headroom rather than pinning the observed value, so a formatter pass or a
+  // few added lines cannot turn main red without a real coverage loss.
   checkMinimums("StudioCore + MediaEngine coverage", observed, {
-    lines: 83.9,
-    functions: 83,
-    regions: 75,
+    lines: 85.5,
+    functions: 87,
+    regions: 77,
   });
 }
 
