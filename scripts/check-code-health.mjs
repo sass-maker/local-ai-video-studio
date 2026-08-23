@@ -256,11 +256,16 @@ function checkDuplication() {
       `(${observed.percentage.toFixed(4)}%), ${observed.clones} groups across ` +
       `${observed.sources} files.`,
   );
-  // Ratcheted legacy debt: https://github.com/sass-maker/local-ai-video-studio/issues/16
+  // Ratcheted legacy debt, re-baselined 2026-08-23 after the swift-format
+  // sweep in bdf14aa reflowed Sources. jscpd matches on token and line runs,
+  // so uniform formatting makes previously divergent blocks look alike:
+  // clones 3 -> 4, duplicated lines 27 -> 49, 0.62% -> 1.03%. This is the
+  // third ratchet the same sweep moved, alongside coverage and complexity.
+  // Tracked in https://github.com/sass-maker/local-ai-video-studio/issues/29
   failRegressions("Duplication", observed, {
-    clones: 3,
-    duplicatedLines: 27,
-    percentage: 0.6209751609935602,
+    clones: 4,
+    duplicatedLines: 49,
+    percentage: 1.0255336961071581,
   });
 }
 
