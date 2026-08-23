@@ -6,6 +6,7 @@
   "llmsFull": "https://local-ai-video-studio.sassmaker.com/llms-full.txt",
   "sitemap": "https://local-ai-video-studio.sassmaker.com/sitemap.xml",
   "robots": "https://local-ai-video-studio.sassmaker.com/robots.txt",
+  "openapi": "https://local-ai-video-studio.sassmaker.com/openapi.json",
   "markdown": {
     "suffix": ".md",
     "negotiation": true

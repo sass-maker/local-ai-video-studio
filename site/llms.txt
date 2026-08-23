@@ -11,5 +11,13 @@
 ## Machine surfaces
 
 - [Agent catalog](https://local-ai-video-studio.sassmaker.com/api/ai): JSON inventory of public surfaces
+- [OpenAPI spec](https://local-ai-video-studio.sassmaker.com/openapi.json): Machine-readable API description
 - [Homepage markdown](https://local-ai-video-studio.sassmaker.com/index.md): Product brief without JS
 - [This index](https://local-ai-video-studio.sassmaker.com/llms.txt)
+
+## When to use this
+
+- Comparing reproducible video-effect variants locally before export on Mac
+- Understanding the local-first processing and validation boundary for video effects
+- Checking distribution readiness and system requirements for a Mac video studio
+- Exploring a Swift/SwiftUI-based local AI video production workflow
