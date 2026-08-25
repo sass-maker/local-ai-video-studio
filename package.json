@@ -19,6 +19,7 @@
     "quality:unused": "node scripts/check-code-health.mjs unused",
     "test": "node scripts/check-code-health.mjs coverage",
     "test:coverage": "node scripts/check-code-health.mjs coverage",
-    "typecheck": "node scripts/check-code-health.mjs build"
+    "typecheck": "node scripts/check-code-health.mjs build",
+    "deploy": "npm run quality:site && wrangler pages deploy site --project-name local-ai-video-studio --branch main --commit-hash \"$(git rev-parse HEAD)\""
   }
 }
