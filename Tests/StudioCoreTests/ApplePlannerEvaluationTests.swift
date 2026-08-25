@@ -10,6 +10,43 @@ private struct PlannerEvaluationCase: Sendable {
   let forbidden: Set<EffectType>
 }
 
+/// Exercises the real Apple Foundation Models path when, and only when, the
+/// host has it available. The test passes (reporting a skip) on machines where
+/// Apple Intelligence is unavailable, disabled, or still downloading, so the
+/// suite never depends on it. Deterministic behaviour is covered separately by
+/// the injected fake in `FakeLocalModelPlannerTests`.
+@Test
+func appleOnDeviceModelPlansOrDisclosesItsFallback() async throws {
+  guard PreferredVariantPlanner.availability == .available else {
+    print("APPLE_PLANNER_SMOKE skipped: \(PreferredVariantPlanner.availability)")
+    return
+  }
+
+  let request = PlanningRequest(
+    instruction: "Make two restrained cinematic versions with a softly blurred background.",
+    variantCount: 2,
+    output: OutputProfile(aspectRatio: .vertical, width: 1080, height: 1920, fps: 24),
+    duration: 24
+  )
+  let outcome = try await PreferredVariantPlanner().planDisclosed(request)
+  let registered = Set(EffectType.allCases)
+
+  #expect(outcome.graphs.count == 2)
+  for graph in outcome.graphs {
+    _ = try EffectGraphValidator().validate(graph)
+    #expect(graph.timeline.flatMap(\.effects).allSatisfy { registered.contains($0.type) })
+  }
+  if outcome.disclosure.provenance.kind == .localModel {
+    #expect(outcome.disclosure.fallbackReason == nil)
+    #expect(outcome.disclosure.provenance.name == "apple-foundation-model")
+  } else {
+    #expect(outcome.disclosure.fallbackReason?.isEmpty == false)
+  }
+  print(
+    "APPLE_PLANNER_SMOKE planner=\(outcome.disclosure.provenance.name) "
+      + "fallback=\(outcome.disclosure.fallbackReason ?? "none")")
+}
+
 @Test
 func applePlannerSemanticEvaluation() async throws {
   guard ProcessInfo.processInfo.environment["RUN_APPLE_MODEL_EVAL"] == "1" else {

@@ -701,8 +701,11 @@ private struct SourceBench: View {
       Text("SOURCE & INTENT").font(.subheadline.weight(.bold))
       Label(model.plannerAvailabilityDescription, systemImage: "apple.intelligence")
         .font(.caption)
-        .foregroundStyle(StudioPalette.ready)
+        .foregroundStyle(
+          model.isUsingLocalModelPlanner ? StudioPalette.ready : StudioPalette.warning
+        )
         .fixedSize(horizontal: false, vertical: true)
+        .accessibilityLabel("Planner availability. \(model.plannerAvailabilityDescription)")
       if let source = model.source {
         VStack(alignment: .leading, spacing: 7) {
           Label(source.displayName, systemImage: "film")

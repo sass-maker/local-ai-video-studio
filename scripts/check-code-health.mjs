@@ -109,7 +109,7 @@ function checkCoverage() {
   const tests =
     swiftTestingCounts.reduce((total, count) => total + count, 0) +
     Math.max(0, ...xctestCounts);
-  checkMinimums("Tests", { tests }, { tests: 60 });
+  checkMinimums("Tests", { tests }, { tests: 71 });
 
   const pathResult = run(
     "swift",
@@ -269,7 +269,7 @@ function checkDuplication() {
   failRegressions("Duplication", observed, {
     clones: 4,
     duplicatedLines: 49,
-    percentage: 1.0255336961071581,
+    percentage: 0.9993881297165,
   });
 }
 

@@ -265,6 +265,29 @@ private func graph(
   #expect(variants[2].timeline[0].effects.map(\.type).contains(.beatFlash))
 }
 
+@Test func deterministicFallbackCoversEveryPresetRecipe() async throws {
+  let request = PlanningRequest(
+    instruction: "Give me every preset study you have.", variantCount: 5, output: output,
+    duration: 42)
+  let variants = try await DeterministicDemoPlanner().plan(request)
+  let validator = EffectGraphValidator()
+
+  #expect(variants.count == 5)
+  #expect(
+    variants.map(\.label) == ["Cel Study", "Comic Ink", "Clean Pulse", "Noir Cut", "Tape Hook"])
+  #expect(variants.allSatisfy { $0.provenance.kind == .deterministicDemo })
+  for variant in variants {
+    _ = try validator.validate(variant)
+    let types = variant.timeline.flatMap(\.effects).map(\.type)
+    #expect(types.contains(.cropAutoSubject))
+    #expect(types.contains(.audioNormalize))
+  }
+  let noir = variants[3].timeline[0].effects.map(\.type)
+  let tape = variants[4].timeline[0].effects.map(\.type)
+  #expect(noir.contains(.styleNoir) && noir.contains(.transitionCrossfade))
+  #expect(tape.contains(.styleVHS) && tape.contains(.titleCard) && tape.contains(.beatFlash))
+}
+
 @Test func plannerEnforcesTwoToFiveVariants() async {
   let request = PlanningRequest(instruction: "one", variantCount: 1, output: output, duration: 5)
   await #expect(throws: PlanningError.variantCountOutOfRange) {
@@ -325,18 +348,6 @@ private func graph(
   #expect(throws: GraphValidationFailure.self) {
     try EffectGraphValidator().validate(graphs[0])
   }
-}
-
-@Test func preferredPlannerFallsBackWhenPrimaryGenerationFails() async throws {
-  struct ExpectedFailure: Error {}
-  let planner = PreferredVariantPlanner(primaryOverride: { _ in throw ExpectedFailure() })
-  let request = PlanningRequest(
-    instruction: "watercolor", variantCount: 2, output: output, duration: 5)
-
-  let graphs = try await planner.plan(request)
-
-  #expect(graphs.count == 2)
-  #expect(graphs.allSatisfy { $0.provenance.kind == .deterministicDemo })
 }
 
 @Test func projectRoundTripsAndPreservesComparison() async throws {

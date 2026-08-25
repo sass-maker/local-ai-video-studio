@@ -101,7 +101,8 @@ import Testing
 }
 
 @Test func promptPlanningReturnsValidatedHashes() async throws {
-  let result = try await StudioAgentService().run(
+  let service = StudioAgentService(planner: .init(model: StubLocalModel()))
+  let result = try await service.run(
     request(
       "plan",
       input: [
@@ -114,6 +115,45 @@ import Testing
 
   #expect(variants.count == 3)
   #expect(variants.allSatisfy { ($0["graphHash"] as? String)?.count == 64 })
+  #expect(payload["planner"] as? String == "stub-local-model")
+  #expect(payload["plannerKind"] as? String == "local_model")
+  #expect(payload["fallbackReason"] is NSNull)
+}
+
+@Test func promptPlanningDisclosesTheDeterministicFallbackReason() async throws {
+  let service = StudioAgentService(planner: .init(model: StubLocalModel(unsupported: true)))
+  let result = try await service.run(
+    request(
+      "plan",
+      input: [
+        "instruction": "Do something unsupported", "variantCount": 2, "durationSeconds": 8.0,
+      ]))
+  let payload = try #require(result["result"] as? [String: Any])
+  let reason = try #require(payload["fallbackReason"] as? String)
+
+  #expect(payload["plannerKind"] as? String == "deterministic_demo")
+  #expect(reason.contains("style.hologram"))
+  #expect((payload["variants"] as? [[String: Any]])?.count == 2)
+}
+
+/// Keeps agent planning coverage deterministic and independent of whether
+/// Apple Intelligence is enabled on the host.
+private struct StubLocalModel: GeneratedPlanProducing {
+  let modelIdentifier = "stub-local-model"
+  var unsupported = false
+
+  func generatePlan(_ request: PlanningRequest) async throws -> GeneratedPlanDraft {
+    let types: [String] =
+      unsupported
+      ? ["style.hologram"] : [EffectType.styleCel.rawValue, EffectType.captionDynamic.rawValue]
+    return GeneratedPlanDraft(
+      variants: (0..<request.variantCount).map { index in
+        GeneratedVariantDraft(
+          label: "Study \(index + 1)",
+          summary: "Stubbed variant \(index + 1) for the agent contract.",
+          effects: types.map { GeneratedEffectDraft(type: $0, strength: 0.5, preset: "bold") })
+      })
+  }
 }
 
 private func request(_ operation: String, input: [String: Any] = [:], extra: [String: Any] = [:])
