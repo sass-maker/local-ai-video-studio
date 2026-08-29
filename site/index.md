@@ -1,13 +1,15 @@
 # Local AI Video Studio
 
-A local-first Mac studio for comparing reproducible video-effect variants.
+A held, local-first Mac experiment for technical creators who want to compare reproducible video-effect variants before export.
 
 ## Product boundary
 
 - Media processing stays local and offline-capable
 - Editing intent becomes a validated, versioned effect graph
 - Two to five reproducible variants can be compared before export
-- Public download distribution is not yet open
+- The working build has not established a recurring creator workflow
+- Development is on hold and there is no public download
+- Reopen only around a real creator job where deterministic local effects clearly help
 
 ## Agent entrypoints
 

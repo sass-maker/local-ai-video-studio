@@ -8,7 +8,13 @@ const requiredFiles = [
   "site/release.json",
   "site/assets/favicon.png",
   "site/assets/studio-rendered.jpg",
+  "site/assets/studio-rendered.webp",
+  "site/assets/studio-rendered-mobile.jpg",
+  "site/assets/studio-rendered-mobile.webp",
   "site/assets/studio-catalog.jpg",
+  "site/assets/studio-catalog.webp",
+  "site/assets/studio-catalog-mobile.jpg",
+  "site/assets/studio-catalog-mobile.webp",
 ];
 
 await Promise.all(requiredFiles.map((file) => access(resolve(root, file))));
@@ -22,7 +28,8 @@ const requiredCopy = [
   "macOS 14 or newer",
   "Local and offline",
   "Contact pending",
-  "Distribution build in preparation",
+  "The experiment is on hold.",
+  "No public download",
 ];
 
 for (const copy of requiredCopy) {

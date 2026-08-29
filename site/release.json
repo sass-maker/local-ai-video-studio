@@ -5,7 +5,7 @@
   "build": "1",
   "minimumSystem": "macOS 14",
   "architecture": "arm64",
-  "status": "preparing",
+  "status": "held",
   "downloadUrl": null,
   "sha256": "a1623ceea1c34715a32e5adefd5ae93919488cc5c3e519b67d3855914d809a46",
   "supportUrl": null,

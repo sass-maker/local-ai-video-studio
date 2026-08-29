@@ -4,12 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#050606">
-    <meta name="description" content="Local AI Video Studio turns one clip and one editing intent into inspectable, reproducible video studies on your Mac.">
+    <meta name="description" content="A held, local-first Mac experiment for turning one clip and one editing intent into inspectable, reproducible video studies.">
     <link rel="canonical" href="https://local-ai-video-studio.sassmaker.com/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://local-ai-video-studio.sassmaker.com/">
     <meta property="og:title" content="Local AI Video Studio — compare the edit before you commit">
-    <meta property="og:description" content="Turn one clip and one editing intent into inspectable, reproducible video studies on your Mac.">
+    <meta property="og:description" content="A held, local-first Mac experiment for comparing reproducible video-effect variants before export.">
+    <meta property="og:image" content="https://local-ai-video-studio.sassmaker.com/assets/studio-rendered.jpg">
+    <meta property="og:image:width" content="2972">
+    <meta property="og:image:height" content="1892">
+    <meta property="og:image:alt" content="Local AI Video Studio comparing three rendered video variants on a Mac.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Local AI Video Studio — compare the edit before you commit">
+    <meta name="twitter:description" content="A held, local-first Mac experiment for comparing reproducible video-effect variants before export.">
+    <meta name="twitter:image" content="https://local-ai-video-studio.sassmaker.com/assets/studio-rendered.jpg">
     <title>Local AI Video Studio — compare the edit before you commit</title>
     <link rel="icon" href="assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
@@ -33,18 +41,18 @@
         <a href="#system">System</a>
         <a href="#release">Release</a>
       </nav>
-      <a class="header-status" href="#release"><span aria-hidden="true"></span> Mac preview</a>
+      <a class="header-status" href="#release"><span aria-hidden="true"></span> Held preview</a>
     </header>
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Optical Printer Bench · local / offline</p>
+          <p class="eyebrow">Held Mac experiment · local / offline</p>
           <h1 id="hero-title">Compare the edit<br>before you commit.</h1>
-          <p class="lede">Turn one clip and one editing intent into two to five reproducible studies. Inspect the exact graph difference, move every take with one playhead, and export only the one you choose.</p>
+          <p class="lede">For technical creators on Apple silicon Macs: turn one clip and one editing intent into two to five reproducible studies. Inspect the exact graph difference, move every take with one playhead, and export only the one you choose.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#bench">See the comparison bench</a>
-            <a class="text-link" href="#release">Distribution status <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="#release">Why the experiment is held <span aria-hidden="true">↓</span></a>
           </div>
         </div>
 
@@ -92,7 +100,12 @@
         </div>
         <figure class="product-window">
           <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>Optical Printer Bench</span><b>Local / Offline</b></div>
-          <img src="assets/studio-rendered.jpg" width="2972" height="1892" decoding="async" alt="Local AI Video Studio comparing three rendered vertical video variants with their disclosed fallbacks and a shared graph difference report.">
+          <picture>
+            <source media="(max-width: 980px)" type="image/webp" srcset="assets/studio-rendered-mobile.webp">
+            <source media="(max-width: 980px)" srcset="assets/studio-rendered-mobile.jpg">
+            <source type="image/webp" srcset="assets/studio-rendered.webp">
+            <img src="assets/studio-rendered.jpg" width="2972" height="1892" decoding="async" alt="Local AI Video Studio comparing three rendered vertical video variants with their disclosed fallbacks and a shared graph difference report.">
+          </picture>
           <figcaption>Real native interface · rendered local studies · warnings remain visible</figcaption>
         </figure>
       </section>
@@ -128,7 +141,12 @@
 
       <section class="system" id="system" aria-labelledby="system-title">
         <div class="catalog-figure">
-          <img src="assets/studio-catalog.jpg" width="2972" height="1892" decoding="async" alt="The native dark Local AI Video Studio effect catalog and three-study comparison workspace.">
+          <picture>
+            <source media="(max-width: 980px)" type="image/webp" srcset="assets/studio-catalog-mobile.webp">
+            <source media="(max-width: 980px)" srcset="assets/studio-catalog-mobile.jpg">
+            <source type="image/webp" srcset="assets/studio-catalog.webp">
+            <img src="assets/studio-catalog.jpg" width="2972" height="1892" decoding="async" alt="The native dark Local AI Video Studio effect catalog and three-study comparison workspace.">
+          </picture>
         </div>
         <div class="system-copy">
           <p class="eyebrow">Strict by construction</p>
@@ -144,10 +162,10 @@
 
       <section class="release" id="release" aria-labelledby="release-title">
         <div class="release-heading">
-          <p class="eyebrow">Release desk · 0.1.0 (1)</p>
-          <h2 id="release-title">The app is built.<br>The download is not open.</h2>
-          <p>The current local package is for verification only. Public distribution remains closed until Developer ID signing, Apple notarization, ticket stapling, Gatekeeper assessment, SHA-256 verification, and a support contact all pass.</p>
-          <span class="release-button" aria-disabled="true">Distribution build in preparation</span>
+          <p class="eyebrow">Held experiment · 0.1.0 (1)</p>
+          <h2 id="release-title">The build works.<br>The experiment is on hold.</h2>
+          <p>The local package renders and compares reproducible variants, but the experiment did not establish a recurring creator job. There is no public download. Reopen it only around a real workflow where deterministic local effects clearly help.</p>
+          <span class="release-button" aria-disabled="true">No public download</span>
         </div>
         <dl class="release-ledger" aria-label="Local AI Video Studio requirements and privacy">
           <div><dt>Hardware</dt><dd>Apple silicon Mac</dd><dd class="detail">16 GB unified memory recommended.</dd></div>

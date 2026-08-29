@@ -3,8 +3,9 @@
   "version": 1,
   "project": "local-ai-video-studio",
   "target": "Local AI Video Studio public product site",
+  "surfaceMode": "persuade",
   "mode": "preserve",
-  "register": "brand",
+  "register": "product",
   "context": {
     "product": "PRODUCT.md",
     "design": "DESIGN.md"
@@ -16,35 +17,60 @@
       "artifacts/design/probes/optical-printer-bench.png"
     ],
     "probes": [],
-    "selected": "Translate the approved Optical Printer Bench contact-sheet workspace into a media-led Persuade surface.",
-    "approval": "not-required",
-    "before": "artifacts/design/after-1440.png"
+    "selected": "optical-printer-bench-preserve",
+    "approval": "agent-selected",
+    "before": "artifacts/design/site-release-after-1440.png",
+    "library": {
+      "strategy": "upstream-first",
+      "primary": "existing-project-system",
+      "sources": [],
+      "runtime": "existing",
+      "customReplacement": {
+        "used": false,
+        "authorization": "not-required",
+        "reason": "The owner-approved Optical Printer Bench system was already healthy. This pass preserved it while correcting lifecycle truth, responsive proof, and metadata."
+      }
+    },
+    "contract": {
+      "purpose": "Explain a held local-first Mac experiment that turns editing intent into reproducible effect variants, show the working native evidence, and state the exact condition for reopening it.",
+      "purposeSource": "PRODUCT.md, PROJECT_STATUS.md, and the canonical Site Health project dossier",
+      "canonicalPurpose": "Local AI Video Studio helps a creator compare reproducible local video effects before choosing and exporting a result.",
+      "purposeAlignment": "match",
+      "driftNote": "",
+      "audience": "Technical creators using Apple silicon Macs who want deterministic local editing options before paying for generative video.",
+      "job": "Understand the import, plan, compare, and export loop; verify local processing and graph constraints; inspect real native proof; and understand why the experiment is held.",
+      "thesis": "An optical-printer contact sheet keeps media and exact graph differences more prominent than AI controls or editor chrome.",
+      "system": "Owner-approved black machinery and daylight stock, fired-clay probe marks, oxidized-teal ready states, square media wells, system type, monospace measurements, and restrained responsive crops.",
+      "signature": "One source becomes equal studies under a shared probe, with every fallback and normalized graph difference attached to the image it affects.",
+      "risk": "A polished working build can look distribution-ready, so the hero and release desk must state the held lifecycle, closed download, and recurring-workflow reopen condition."
+    }
   },
   "evidence": {
     "screenshots": [
       {
         "width": 390,
-        "path": "artifacts/design/site-release-after-390.png"
+        "path": "artifacts/design/landing-audit/revised-390.png"
       },
       {
         "width": 768,
-        "path": "artifacts/design/site-release-after-768.png"
+        "path": "artifacts/design/landing-audit/revised-768.png"
       },
       {
         "width": 1440,
-        "path": "artifacts/design/site-release-after-1440.png"
+        "path": "artifacts/design/landing-audit/revised-1440.png"
       }
     ],
     "projectCheck": {
-      "command": "node --check scripts/build-site.mjs && node --check scripts/check-site.mjs && node scripts/check-site.mjs && build-site smoke && Impeccable detector && git diff --check && design-workflow check",
-      "status": "pass"
+      "command": "npm run quality:site && npm run quality",
+      "status": "pass",
+      "note": "The complete native and site quality gate passes. Final 390, 768, and 1440 renders were inspected after stacking phone studies and adding focused native proof for phone and tablet."
     },
     "critique": {
       "score": 38,
       "maximum": 40
     },
     "audit": {
-      "score": 18,
+      "score": 19,
       "maximum": 20
     },
     "unresolved": {
@@ -53,11 +79,36 @@
     },
     "detector": {
       "posture": "advisory",
-      "findings": []
+      "findings": [
+        "Baseline independent review found two P1 defects: lifecycle copy implied active distribution, and core proof degraded on phone and tablet. Both are resolved in the final candidate.",
+        "Residual P2: the mobile page is long because it preserves all four workflow stages and two separate native proof views."
+      ]
+    },
+    "comprehension": {
+      "status": "pass",
+      "reviewer": "Independent fresh-visitor baseline and revised review by Harvey",
+      "answers": {
+        "product": "Local AI Video Studio is a held, local-first Mac experiment for comparing reproducible video-effect studies.",
+        "audience": "It is for technical creators on Apple silicon Macs who want deterministic effects before generative video.",
+        "value": "It lets a creator compare exact edit differences before selecting and exporting one result.",
+        "mechanism": "One local clip moves through deterministic planning, synchronized variants, a validated effect graph, and revision-matched export.",
+        "proof": "Real native captures show rendered variants, visible fallbacks, normalized graph differences, and the registered effect catalog.",
+        "nextAction": "Treat it as held with no public download, and reopen only for a recurring creator workflow where deterministic local effects clearly help."
+      },
+      "purposeScore": {
+        "product": 25,
+        "audience": 15,
+        "value": 15,
+        "mechanism": 15,
+        "proof": 15,
+        "nextAction": 15,
+        "total": 100
+      },
+      "mismatches": []
     }
   },
   "ownerFeedback": {
-    "decision": "delegated",
-    "note": "Owner approved the cross-repository product-site plan and delegated completion while requiring beautiful UI and quiet, sequential validation."
+    "decision": "agent-selected",
+    "note": "The operator delegated priority-aware end-to-end landing qualification without repeated approval loops. This receipt records a qualified local candidate, not deployment authorization."
   }
 }

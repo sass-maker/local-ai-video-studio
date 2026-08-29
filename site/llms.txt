@@ -1,6 +1,6 @@
 # Local AI Video Studio
 
-> A local-first Mac studio for comparing reproducible video-effect variants before export.
+> A held, local-first Mac experiment for technical creators comparing reproducible video-effect variants before export.
 
 ## Product
 
@@ -19,5 +19,5 @@
 
 - Comparing reproducible video-effect variants locally before export on Mac
 - Understanding the local-first processing and validation boundary for video effects
-- Checking distribution readiness and system requirements for a Mac video studio
+- Checking the held lifecycle, closed distribution, and system requirements for the Mac experiment
 - Exploring a Swift/SwiftUI-based local AI video production workflow

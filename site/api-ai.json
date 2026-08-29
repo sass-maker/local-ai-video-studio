@@ -2,6 +2,8 @@
   "name": "Local AI Video Studio",
   "version": "1",
   "url": "https://local-ai-video-studio.sassmaker.com",
+  "description": "A held, local-first Mac experiment for comparing reproducible video-effect variants before export.",
+  "lifecycle": "held",
   "llms": "https://local-ai-video-studio.sassmaker.com/llms.txt",
   "llmsFull": "https://local-ai-video-studio.sassmaker.com/llms-full.txt",
   "sitemap": "https://local-ai-video-studio.sassmaker.com/sitemap.xml",
@@ -29,7 +31,7 @@
       "url": "https://local-ai-video-studio.sassmaker.com/",
       "md": "https://local-ai-video-studio.sassmaker.com/index.md",
       "kind": "static",
-      "description": "Product home"
+      "description": "Product workflow, held lifecycle, and closed distribution status"
     }
   ],
   "auth": {

@@ -88,6 +88,7 @@ h2 { margin: 0; font-size: clamp(3rem, 5.4vw, 5.8rem); font-weight: 760; line-he
 .window-bar i:nth-child(3) { background: var(--teal); }
 .window-bar span { margin-left: 12px; }
 .window-bar b { margin-left: auto; color: var(--teal); font-weight: 600; }
+.product-window picture { display: block; }
 .product-window img { width: 100%; height: auto; }
 .product-window figcaption { padding: 12px 16px; color: var(--muted); border-top: 1px solid var(--line); font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; }
 
@@ -104,6 +105,7 @@ h2 { margin: 0; font-size: clamp(3rem, 5.4vw, 5.8rem); font-weight: 760; line-he
 
 .system { display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(340px, 0.78fr); min-height: 760px; background: var(--raised); }
 .catalog-figure { align-self: center; padding: 70px 0 70px max(28px, calc((100vw - 1480px) / 2)); overflow: hidden; }
+.catalog-figure picture { display: block; }
 .catalog-figure img { width: 122%; max-width: none; height: auto; border: 1px solid var(--line-strong); }
 .system-copy { display: flex; flex-direction: column; justify-content: center; padding: 90px max(28px, calc((100vw - 1480px) / 2)) 90px 7vw; }
 .system-copy > p:not(.eyebrow) { max-width: 39rem; margin: 30px 0 0; color: var(--muted); }
@@ -159,10 +161,14 @@ footer p a { text-underline-offset: 4px; }
   .hero { min-height: auto; padding: 72px 0 52px; }
   h1 { font-size: clamp(3.4rem, 17vw, 5rem); }
   h2 { font-size: clamp(2.8rem, 14vw, 4.1rem); }
-  .hero-specimen { overflow-x: auto; }
-  .source-slip, .probe-strip { min-width: 720px; }
-  .study-strip { width: 720px; }
-  .frame { height: 300px; }
+  .source-slip { grid-template-columns: auto 1fr; gap: 10px 18px; }
+  .source-slip code { grid-column: 1 / -1; }
+  .study-strip { grid-template-columns: 1fr; }
+  .study-strip article { padding: 18px; border-top: 1px solid var(--line); border-left: 0; }
+  .study-strip article:first-child { border-top: 0; }
+  .frame { height: 210px; }
+  .probe-strip { grid-template-columns: 1fr auto; }
+  .probe-strip > div { grid-column: 1 / -1; grid-row: 2; }
   .bench, .workflow, .release { padding: 96px 20px; }
   .product-window { margin-top: 54px; box-shadow: 8px 9px 0 #c7c1b4; }
   .window-bar span { display: none; }
