@@ -30,6 +30,8 @@ const requiredCopy = [
   "Contact pending",
   "The experiment is on hold.",
   "No public download",
+  '"y6bwgxt2sr"',
+  '"project_id","local-ai-video-studio"',
 ];
 
 for (const copy of requiredCopy) {
@@ -53,6 +55,10 @@ if (release.downloadUrl !== null) {
 const binaryUrls = html.match(/https?:[^\s"']+\.(?:dmg|pkg|zip)/gi) ?? [];
 if (binaryUrls.length > 0 && release.downloadUrl === null) {
   throw new Error("The page exposes a binary URL while release metadata is closed");
+}
+
+if (!html.includes("https://www.clarity.ms/tag/")) {
+  throw new Error("The informational site must load its product-owned Clarity project");
 }
 
 console.log("Local AI Video Studio site check passed; binary distribution remains fail-closed.");

@@ -11,6 +11,12 @@ A held, local-first Mac experiment for technical creators who want to compare re
 - Development is on hold and there is no public download
 - Reopen only around a real creator job where deterministic local effects clearly help
 
+## Website analytics
+
+The native Mac application contains no telemetry. The separate public
+informational site uses PostHog for a page-view event and Microsoft Clarity for
+session replay and heatmaps; it cannot access local media or project files.
+
 ## Agent entrypoints
 
 - https://local-ai-video-studio.sassmaker.com/llms.txt

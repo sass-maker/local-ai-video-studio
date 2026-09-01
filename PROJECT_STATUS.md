@@ -1,6 +1,6 @@
 # Local AI Video Studio — PROJECT STATUS
 
-Last updated: 2026-08-10
+Last updated: 2026-08-31
 
 ## Why / What
 
@@ -32,6 +32,10 @@ frame-perfect editing.
 
 ## Timeline
 
+- 2026-08-31 — Added source-ready product-owned Microsoft Clarity tracking to
+  the public informational site and disclosed its PostHog and Clarity use in
+  HTML and Markdown. The native Mac application remains telemetry-free and no
+  deployment ran.
 - 2026-08-12 — Adopted the Fleet native code-health gate with 43 tests,
   StudioCore and MediaEngine coverage floors, zero unused-code and suppression
   tolerance, and ratcheted formatter, complexity, and duplication baselines.
