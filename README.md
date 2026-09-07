@@ -128,3 +128,14 @@ effect, or a graph that failed validation. `studio-agent plan` reports the same
 truth as `planner`, `plannerKind`, and `fallbackReason`. Local-model planning is
 injectable, so the test suite exercises mapping, validation, and fallback with a
 fake model and never requires Apple Intelligence to be enabled.
+
+<!-- portfolio-retained-work:2026-09-07 -->
+## Retained work from the portfolio review
+
+These are unresolved requirements retained at the owner’s request. They are not completed features. This project is inactive; this list is reference material, not an active roadmap.
+
+### We should at least have these capabilities, but with local AI.
+
+Compare deterministic local editing and variant review against existing editors before implementing more capabilities; owner is reconsidering the product.
+
+Original requirements and discussion: [#33](https://github.com/sass-maker/local-ai-video-studio/issues/33).
