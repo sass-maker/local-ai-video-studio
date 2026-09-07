@@ -158,11 +158,11 @@ public struct EffectGraphValidator: Sendable {
     validate(
       effect.parameters.duration, rule: definition.duration, name: "duration", path: path,
       diagnostics: &diagnostics)
-    if definition.isApproximation {
+    if let note = definition.readinessNote {
       diagnostics.append(
         .init(
           severity: .warning, path: path,
-          message: "\(definition.displayName) uses a deterministic realtime approximation."))
+          message: "\(definition.displayName): \(note)"))
     }
   }
 

@@ -158,10 +158,20 @@ complete.
 Before reconsidering public sharing, retain these gates:
 
 - A real creator workflow and comparison against an existing editor.
-- Accurate effect readiness: titles/captions, subject tracking, segmentation,
-  crossfades, audio normalization, and beat-aware effects need implementation
-  or clearer catalog disclosure; a registered effect is not proof it works.
+- Titles/captions, subject tracking, segmentation, crossfades, loudness
+  normalization and audio-driven beats remain unimplemented. The catalog,
+  inspector and validated-plan warnings now disclose skipped operations,
+  whole-frame blur and fixed timed flash/zoom approximations. Render manifests
+  mark ignored crossfade/normalization requests as degraded; these labels do
+  not implement the missing effects.
 - Human verification of import, synchronized comparison, selection, and export
   in the SwiftUI app, including actual audio and longer source media.
 - An approved support channel and signed, notarized, stapled Mac package that
   passes Gatekeeper on a clean installation.
+
+The bounded readiness repair passed 74 tests, including real AVFoundation
+synthetic rendering with saved degradation records and actual agent
+catalog/plan warnings. The native executable built and launched, but Computer
+Use failed with `Sky Computer Use native pipe startup failed`; Effects-panel
+visual/accessibility and human audio checks remain unverified. No owner media,
+external model/provider calls, distribution or deployment was used.

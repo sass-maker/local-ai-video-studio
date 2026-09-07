@@ -51,7 +51,7 @@ public struct DeterministicDemoPlanner: VariantPlanning {
   private func animeRecipe(_ index: Int, _ request: PlanningRequest) -> EffectGraph {
     graph(
       index: index, label: "Cel Study",
-      summary: "Cel-shaded approximation with restrained outlines and bold captions.",
+      summary: "Cel-shaded approximation; captions are retained in the graph but not rendered.",
       request: request,
       effects: baseEffects() + [
         EffectNode(type: .styleCel, parameters: .init(strength: 0.68)),
@@ -62,7 +62,7 @@ public struct DeterministicDemoPlanner: VariantPlanning {
   private func comicRecipe(_ index: Int, _ request: PlanningRequest) -> EffectGraph {
     graph(
       index: index, label: "Comic Ink",
-      summary: "Higher-contrast comic approximation with ink outlines and faster beat zooms.",
+      summary: "Higher-contrast comic approximation with ink outlines and fixed timed zooms.",
       request: request,
       effects: baseEffects() + [
         EffectNode(type: .styleComic, parameters: .init(strength: 0.78)),
@@ -75,7 +75,7 @@ public struct DeterministicDemoPlanner: VariantPlanning {
     graph(
       index: index, label: "Clean Pulse",
       summary:
-        "Original subject with replaced background, dynamic captions, and restrained beat flashes.",
+        "Original background with fixed timed flashes; background replacement and captions are pending.",
       request: request,
       effects: baseEffects() + [
         EffectNode(type: .backgroundReplace, parameters: .init(preset: "soft_gradient")),
@@ -87,7 +87,7 @@ public struct DeterministicDemoPlanner: VariantPlanning {
   private func noirRecipe(_ index: Int, _ request: PlanningRequest) -> EffectGraph {
     graph(
       index: index, label: "Noir Cut",
-      summary: "Monochrome cinematic approximation with slower crossfades.", request: request,
+      summary: "Monochrome cinematic approximation; crossfades are not rendered.", request: request,
       effects: baseEffects() + [
         EffectNode(type: .styleNoir, parameters: .init(strength: 0.72)),
         EffectNode(type: .transitionCrossfade, parameters: .init(duration: 0.28)),
@@ -97,7 +97,8 @@ public struct DeterministicDemoPlanner: VariantPlanning {
   private func vhsRecipe(_ index: Int, _ request: PlanningRequest) -> EffectGraph {
     graph(
       index: index, label: "Tape Hook",
-      summary: "VHS approximation with a short title hook and beat flashes.", request: request,
+      summary: "VHS approximation with fixed timed flashes; the title overlay is not rendered.",
+      request: request,
       effects: baseEffects() + [
         EffectNode(type: .styleVHS, parameters: .init(strength: 0.58)),
         EffectNode(type: .titleCard, parameters: .init(text: "WATCH THIS")),

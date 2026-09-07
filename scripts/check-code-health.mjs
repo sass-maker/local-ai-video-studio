@@ -109,7 +109,7 @@ function checkCoverage() {
   const tests =
     swiftTestingCounts.reduce((total, count) => total + count, 0) +
     Math.max(0, ...xctestCounts);
-  checkMinimums("Tests", { tests }, { tests: 71 });
+  checkMinimums("Tests", { tests }, { tests: 74 });
 
   const pathResult = run(
     "swift",
@@ -141,10 +141,12 @@ function checkCoverage() {
   // original 85.5 and the other two ratchet up. Each floor keeps deliberate
   // headroom rather than pinning the observed value, so a formatter pass or a
   // few added lines cannot turn main red without a real coverage loss.
+  // 2026-09-07: readiness/plan/render regressions lift coverage above 89/90/82;
+  // retain roughly one point of headroom in the stricter floors below.
   checkMinimums("StudioCore + MediaEngine coverage", observed, {
-    lines: 85.5,
-    functions: 87,
-    regions: 77,
+    lines: 88,
+    functions: 89,
+    regions: 81,
   });
 }
 
@@ -267,9 +269,9 @@ function checkDuplication() {
   // third ratchet the same sweep moved, alongside coverage and complexity.
   // Tracked in https://github.com/sass-maker/local-ai-video-studio/issues/29
   failRegressions("Duplication", observed, {
-    clones: 4,
-    duplicatedLines: 49,
-    percentage: 0.9993881297165,
+    clones: 3,
+    duplicatedLines: 32,
+    percentage: 0.66,
   });
 }
 

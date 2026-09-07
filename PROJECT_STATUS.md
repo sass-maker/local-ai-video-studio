@@ -32,6 +32,13 @@ frame-perfect editing.
 
 ## Timeline
 
+- 2026-09-07 — Corrected readiness for ignored crossfade/normalization requests
+  and whole-frame blur/fixed timed flash/zoom approximations. Shared disclosure
+  reaches agent catalogs, native inspector, validated-plan warnings and skipped
+  effect render manifests. Synthetic render/persisted-manifest tests pass;
+  native panel inspection remains blocked by the Computer Use connection.
+  Retained inactive scope and #33's actual capability/distribution gates.
+
 - 2026-09-07 — Qualified the native structured effects workflow with an original
   silent synthetic source, real Apple on-device plans, graph edits, two renders,
   selection, export, decoding and playback. Full local quality gate passed

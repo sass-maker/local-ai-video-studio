@@ -204,6 +204,25 @@ private actor FakeRenderer: VariantRendering {
   let rendered = try await MediaAnalyzer().analyze(outputURL)
   #expect(rendered.width == 720)
   #expect(rendered.height == 1280)
+
+  let fallbackGraph = try normalized(
+    label: "Pending treatments", id: UUID(),
+    effects: [.init(type: .transitionCrossfade), .init(type: .audioNormalize)])
+  let fallbackURL = temporary.appending(path: "fallback.mp4")
+  let fallback = try await AVFoundationRenderer().render(
+    RenderRequest(
+      sourceURL: sourceURL, outputURL: fallbackURL, normalizedGraph: fallbackGraph,
+      sourceFingerprint: fingerprint, mode: .preview))
+  #expect(fallback.state == .degraded)
+  #expect(Set(fallback.degradations.map(\.effectType)) == [.transitionCrossfade, .audioNormalize])
+  #expect(fallback.degradations.contains { $0.reason.contains("no transition is applied") })
+  #expect(fallback.degradations.contains { $0.reason.contains("source audio level is unchanged") })
+  let decoder = JSONDecoder()
+  decoder.dateDecodingStrategy = .iso8601
+  let saved = try decoder.decode(
+    RenderManifest.self, from: Data(contentsOf: fallbackURL.appendingPathExtension("json")))
+  #expect(saved.degradations == fallback.degradations)
+  #expect(FileManager.default.fileExists(atPath: fallbackURL.path))
 }
 
 private func makeFixtureVideo(at url: URL) async throws {

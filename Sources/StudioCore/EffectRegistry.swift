@@ -71,6 +71,12 @@ public struct ParameterRule: Equatable, Sendable {
   }
 }
 
+private let approximationReasons: [EffectType: String] = [
+  .backgroundBlur: "Blurs the entire frame; the subject is not isolated.",
+  .beatFlash: "Uses a fixed timed flash; it does not detect or follow audio beats.",
+  .beatZoom: "Uses a fixed timed zoom; it does not detect or follow audio beats.",
+]
+
 public struct EffectDefinition: Equatable, Sendable {
   public let type: EffectType
   public let displayName: String
@@ -111,6 +117,12 @@ public struct EffectDefinition: Equatable, Sendable {
     self.intensity = intensity
     self.rate = rate
     self.duration = duration
+  }
+
+  public var readinessNote: String? {
+    fallbackReason
+      ?? (isApproximation
+        ? approximationReasons[type] ?? "Uses a deterministic realtime approximation." : nil)
   }
 
   public var parameters: [EffectParameterDescriptor] {
@@ -185,16 +197,19 @@ public struct EffectRegistry: Sendable {
         .backgroundReplace: "Subject segmentation is pending; the original background is retained.",
         .captionDynamic: "Text overlay rendering is pending; captions remain in the graph.",
         .titleCard: "Title overlay rendering is pending; the title remains in the graph.",
+        .transitionCrossfade: "Crossfade rendering is pending; no transition is applied.",
+        .audioNormalize: "Loudness normalization is pending; source audio level is unchanged.",
       ]
+      let isApproximation = styleTypes.contains(type) || approximationReasons[type] != nil
       return EffectDefinition(
         type: type,
         displayName: type.displayName,
         category: type.category,
         cost: styleTypes.contains(type) ? .heavy : (mediumTypes.contains(type) ? .medium : .light),
         readiness: fallbackReasons[type] == nil
-          ? (styleTypes.contains(type) ? .approximation : .ready) : .fallback,
+          ? (isApproximation ? .approximation : .ready) : .fallback,
         fallbackReason: fallbackReasons[type],
-        isApproximation: styleTypes.contains(type),
+        isApproximation: isApproximation,
         allowsPassthroughFallback: type != .cropAutoSubject && type != .resize && type != .trim,
         strength: styleTypes.contains(type) || [.backgroundBlur, .outline, .glow].contains(type)
           ? ParameterRule(0, 1) : nil,

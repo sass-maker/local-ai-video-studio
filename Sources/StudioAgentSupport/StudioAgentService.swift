@@ -310,6 +310,7 @@ public struct StudioAgentService: Sendable {
           "cost": definition.cost.rawValue,
           "readiness": definition.readiness.rawValue,
           "fallbackReason": definition.fallbackReason ?? NSNull(),
+          "readinessNote": definition.readinessNote ?? NSNull(),
         ] as [String: Any]
       }
     ]

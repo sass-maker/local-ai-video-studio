@@ -16,6 +16,31 @@ import Testing
     ])
 }
 
+@Test func catalogAndGeneratedPlansDiscloseCurrentRenderLimitations() async throws {
+  let service = StudioAgentService(planner: .init(model: StubLocalModel(unsupported: true)))
+  let catalog = try await service.run(request("catalog"))
+  let payload = try #require(catalog["result"] as? [String: Any])
+  let effects = try #require(payload["effects"] as? [[String: Any]])
+  for type in [
+    EffectType.audioNormalize, .transitionCrossfade, .backgroundBlur, .beatFlash, .beatZoom,
+  ] {
+    let row = try #require(effects.first { $0["id"] as? String == type.rawValue })
+    #expect(row["readiness"] as? String != "ready")
+    #expect((row["readinessNote"] as? String)?.isEmpty == false)
+  }
+  let result = try await service.run(
+    request(
+      "plan", input: ["instruction": "Five studies", "variantCount": 5, "durationSeconds": 3.0]))
+  let plans = try #require(result["result"] as? [String: Any])
+  let variants = try #require(plans["variants"] as? [[String: Any]])
+  let warnings = variants.flatMap { $0["warnings"] as? [[String: Any]] ?? [] }
+    .compactMap { $0["message"] as? String }
+  #expect(variants.count == 5)
+  #expect(warnings.filter { $0.contains("source audio level is unchanged") }.count == 5)
+  #expect(warnings.contains { $0.contains("no transition is applied") })
+  #expect(warnings.contains { $0.contains("does not detect or follow audio beats") })
+}
+
 @Test func agentTimelineEditMatchesTheNativeValidatedGraph() async throws {
   let graph = agentGraph()
   let segmentID = graph.timeline[0].id

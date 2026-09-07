@@ -158,22 +158,8 @@ public struct AVFoundationRenderer: VariantRendering, Sendable {
 
   private func degradationRecords(in graph: EffectGraph) -> [DegradationRecord] {
     graph.timeline.flatMap(\.effects).compactMap { node in
-      switch node.type {
-      case .backgroundReplace:
-        DegradationRecord(
-          effectID: node.id, effectType: node.type,
-          reason: "Subject segmentation adapter is unavailable; original background retained.")
-      case .captionDynamic, .titleCard:
-        DegradationRecord(
-          effectID: node.id, effectType: node.type,
-          reason: "Text overlay adapter is pending; video rendered without this overlay.")
-      case .cropAutoSubject:
-        DegradationRecord(
-          effectID: node.id, effectType: node.type,
-          reason: "Subject tracking adapter is unavailable; center crop used.")
-      default:
-        nil
-      }
+      guard let reason = EffectRegistry.standard[node.type]?.fallbackReason else { return nil }
+      return DegradationRecord(effectID: node.id, effectType: node.type, reason: reason)
     }
   }
 }

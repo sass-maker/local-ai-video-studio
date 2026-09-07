@@ -28,6 +28,21 @@ private func graph(
   )
 }
 
+@Test func validationDisclosesSkippedAndApproximateEffectsWithoutRejectingThePlan() throws {
+  let result = try EffectGraphValidator().validate(
+    graph(effects: [
+      .init(type: .transitionCrossfade), .init(type: .audioNormalize),
+      .init(type: .backgroundBlur), .init(type: .beatFlash), .init(type: .beatZoom),
+    ]))
+  let messages = result.warnings.map(\.message)
+  #expect(messages.count == 5)
+  #expect(messages.contains { $0.contains("no transition is applied") })
+  #expect(messages.contains { $0.contains("source audio level is unchanged") })
+  #expect(messages.contains { $0.contains("entire frame") })
+  #expect(messages.filter { $0.contains("does not detect or follow audio beats") }.count == 2)
+  #expect(result.graph.timeline[0].effects.count == 5)
+}
+
 @Test func strictDecoderRejectsUnknownRootFields() throws {
   let encoded = try JSONEncoder().encode(graph())
   var object = try #require(JSONSerialization.jsonObject(with: encoded) as? [String: Any])

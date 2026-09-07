@@ -69,7 +69,7 @@ private let registry = EffectRegistry.standard
   #expect(try #require(registry[.speed]).defaultParameters.target == nil)
 }
 
-@Test func onlyStyleEffectsAreApproximationsAndFallbacksCarryAReason() {
+@Test func approximationsAndFallbacksCarryConsistentReadiness() {
   for definition in registry.allDefinitions {
     if definition.readiness == .fallback {
       #expect(definition.fallbackReason != nil)
@@ -77,6 +77,15 @@ private let registry = EffectRegistry.standard
       #expect(definition.fallbackReason == nil)
       #expect(definition.isApproximation == (definition.readiness == .approximation))
     }
+  }
+}
+
+@Test func incompleteEffectsDoNotAdvertiseReadyRendering() throws {
+  for type in [EffectType.audioNormalize, .transitionCrossfade] {
+    #expect(try #require(registry[type]).readiness == .fallback)
+  }
+  for type in [EffectType.beatFlash, .beatZoom, .backgroundBlur] {
+    #expect(try #require(registry[type]).readiness == .approximation)
   }
 }
 

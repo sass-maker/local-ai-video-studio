@@ -135,6 +135,26 @@ struct StudioWorkspace: View {
     }
   }
 
+  private var compactEffectButtons: some View {
+    Group {
+      Button {
+        showingEffects = true
+      } label: {
+        Image(systemName: "slider.horizontal.3")
+      }
+      .accessibilityLabel("Edit effects")
+      .disabled(model.variants.isEmpty)
+      .keyboardShortcut("e", modifiers: [.command, .shift])
+      Button {
+        showingPlan = true
+      } label: {
+        Image(systemName: "doc.text.magnifyingglass")
+      }
+      .accessibilityLabel("View generated effect plan")
+      .disabled(model.variants.isEmpty)
+    }
+  }
+
   private var compactTopBar: some View {
     HStack(spacing: 10) {
       Text("LOCAL VIDEO STUDIO").font(.headline)
@@ -152,21 +172,7 @@ struct StudioWorkspace: View {
       }
       .accessibilityLabel(model.isBlinded ? "Reveal labels" : "Blind labels")
       appearanceMenu
-      Button {
-        showingEffects = true
-      } label: {
-        Image(systemName: "slider.horizontal.3")
-      }
-      .accessibilityLabel("Edit effects")
-      .disabled(model.variants.isEmpty)
-      .keyboardShortcut("e", modifiers: [.command, .shift])
-      Button {
-        showingPlan = true
-      } label: {
-        Image(systemName: "doc.text.magnifyingglass")
-      }
-      .accessibilityLabel("View generated effect plan")
-      .disabled(model.variants.isEmpty)
+      compactEffectButtons
       Button("Export", action: model.exportSelected)
         .buttonStyle(PrinterPrimaryButtonStyle())
         .disabled(!model.canExportSelected)
@@ -193,21 +199,7 @@ struct StudioWorkspace: View {
       .accessibilityLabel(model.isBlinded ? "Reveal labels" : "Blind labels")
       .keyboardShortcut("b", modifiers: [.command])
       appearanceMenu
-      Button {
-        showingEffects = true
-      } label: {
-        Image(systemName: "slider.horizontal.3")
-      }
-      .accessibilityLabel("Edit effects")
-      .disabled(model.variants.isEmpty)
-      .keyboardShortcut("e", modifiers: [.command, .shift])
-      Button {
-        showingPlan = true
-      } label: {
-        Image(systemName: "doc.text.magnifyingglass")
-      }
-      .accessibilityLabel("View generated effect plan")
-      .disabled(model.variants.isEmpty)
+      compactEffectButtons
       Button(action: model.exportSelected) {
         Image(systemName: "square.and.arrow.up")
       }
@@ -498,15 +490,11 @@ private struct EffectCatalogRow: View {
               applyToAll ? "Removes from every variant" : "Removes from the selected variant")
         }
       }
-      if let fallbackReason = definition.fallbackReason {
-        Label(fallbackReason, systemImage: "exclamationmark.triangle")
+      if let note = definition.readinessNote {
+        Label(note, systemImage: "exclamationmark.triangle")
           .font(.caption)
           .foregroundStyle(StudioPalette.warning)
           .fixedSize(horizontal: false, vertical: true)
-      } else if definition.readiness == .approximation {
-        Text("Fast local approximation; the exact graph records this treatment.")
-          .font(.caption)
-          .foregroundStyle(StudioPalette.mutedInk)
       } else if definition.parameters.isEmpty {
         Text("Uses the registered local preset; no numeric tuning is available.")
           .font(.caption)
