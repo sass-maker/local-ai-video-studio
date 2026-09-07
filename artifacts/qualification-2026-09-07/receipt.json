@@ -1,0 +1,222 @@
+{
+  "schema": "studio.local-qualification.v1",
+  "observedAt": "2026-09-07",
+  "sourceRevision": "f6855dda942e1983cdeb989414468631d280eb55",
+  "scope": "Synthetic silent effect workflow through the native structured agent. Not a GUI, real-creator or distribution qualification.",
+  "source": {
+    "provenance": "Original procedural FFmpeg testsrc2 pattern, generated locally for QA. No private or third-party footage.",
+    "command": "ffmpeg -f lavfi -i testsrc2=size=640x360:rate=24:duration=6 -c:v libx264 -pix_fmt yuv420p -movflags +faststart synthetic-source.mp4",
+    "sha256": "4c66004fc30a27b9d1258b6f68e9c45e102ade963da3b9bce43ee852e174ef30"
+  },
+  "plan": {
+    "fallbackReason": null,
+    "planner": "apple-foundation-model",
+    "plannerKind": "local_model",
+    "variants": [
+      {
+        "graph": {
+          "difference_summary": "A restrained noir treatment using subtle black tones and sharp contrasts.",
+          "id": "10000000-0000-4000-8000-000000000001",
+          "label": "Noir Contrast",
+          "output": {
+            "aspect_ratio": "16:9",
+            "fps": 24,
+            "height": 360,
+            "width": 640
+          },
+          "provenance": {
+            "kind": "local_model",
+            "name": "apple-foundation-model",
+            "version": "system"
+          },
+          "schema_version": 1,
+          "timeline": [
+            {
+              "effects": [
+                {
+                  "id": "10000000-0000-4000-8000-000000000100",
+                  "parameters": {
+                    "strength": 1
+                  },
+                  "required": false,
+                  "type": "style.noir"
+                }
+              ],
+              "end": 6,
+              "id": "10000000-0000-4000-8000-000000000050",
+              "start": 0
+            }
+          ]
+        },
+        "graphHash": "5d99abdff27a8bc308e5d6aab68ece8eba3ea4c7a0b918561e07a1b794c09800",
+        "warnings": [
+          {
+            "message": "Noir uses a deterministic realtime approximation.",
+            "path": "timeline[0].effects[0]",
+            "severity": "warning"
+          }
+        ]
+      },
+      {
+        "graph": {
+          "difference_summary": "A cinematic color treatment with rich, vibrant tones.",
+          "id": "10000000-0000-4000-8000-000000010001",
+          "label": "Cinematic Hue",
+          "output": {
+            "aspect_ratio": "16:9",
+            "fps": 24,
+            "height": 360,
+            "width": 640
+          },
+          "provenance": {
+            "kind": "local_model",
+            "name": "apple-foundation-model",
+            "version": "system"
+          },
+          "schema_version": 1,
+          "timeline": [
+            {
+              "effects": [
+                {
+                  "id": "10000000-0000-4000-8000-000000010100",
+                  "parameters": {
+                    "strength": 1
+                  },
+                  "required": false,
+                  "type": "style.cinematic"
+                }
+              ],
+              "end": 6,
+              "id": "10000000-0000-4000-8000-000000010050",
+              "start": 0
+            }
+          ]
+        },
+        "graphHash": "2451237caa381dafb39844364539738798661ff07b952343317d0cc9caa6f205",
+        "warnings": [
+          {
+            "message": "Cinematic uses a deterministic realtime approximation.",
+            "path": "timeline[0].effects[0]",
+            "severity": "warning"
+          }
+        ]
+      }
+    ]
+  },
+  "editedVariant": {
+    "graph": {
+      "difference_summary": "A restrained noir treatment using subtle black tones and sharp contrasts.",
+      "id": "10000000-0000-4000-8000-000000000001",
+      "label": "Noir Contrast",
+      "output": {
+        "aspect_ratio": "16:9",
+        "fps": 24,
+        "height": 360,
+        "width": 640
+      },
+      "provenance": {
+        "kind": "local_model",
+        "name": "apple-foundation-model",
+        "version": "system"
+      },
+      "schema_version": 1,
+      "timeline": [
+        {
+          "effects": [
+            {
+              "id": "10000000-0000-4000-8000-000000000100",
+              "parameters": {
+                "strength": 1
+              },
+              "required": false,
+              "type": "style.noir"
+            }
+          ],
+          "end": 3,
+          "id": "10000000-0000-4000-8000-000000000050",
+          "start": 0
+        }
+      ]
+    },
+    "graphHash": "a68fc87ce7face3755db788fb3ade6fc17c2c734eb85ca5fb06d09f4f8b49bfb",
+    "warnings": [
+      {
+        "message": "Noir uses a deterministic realtime approximation.",
+        "path": "timeline[0].effects[0]",
+        "severity": "warning"
+      }
+    ]
+  },
+  "renders": [
+    {
+      "completedAt": "2026-09-07T09:43:18Z",
+      "degradations": [],
+      "normalizedGraphHash": "a68fc87ce7face3755db788fb3ade6fc17c2c734eb85ca5fb06d09f4f8b49bfb",
+      "outputRelativePath": "variant-1.mp4",
+      "sourceFingerprint": "4c66004fc30a27b9d1258b6f68e9c45e102ade963da3b9bce43ee852e174ef30",
+      "state": "completed"
+    },
+    {
+      "completedAt": "2026-09-07T09:43:19Z",
+      "degradations": [],
+      "normalizedGraphHash": "2451237caa381dafb39844364539738798661ff07b952343317d0cc9caa6f205",
+      "outputRelativePath": "variant-2.mp4",
+      "sourceFingerprint": "4c66004fc30a27b9d1258b6f68e9c45e102ade963da3b9bce43ee852e174ef30",
+      "state": "completed"
+    }
+  ],
+  "export": {
+    "relativeLocalPath": ".fleet-local/shareability-2026-09-07/selected-export.mp4",
+    "bytes": 424928,
+    "sha256": "a5389a263db2c662c15c976b26ea87afb59d896839181ba2d4e8b9b6ccfe7c1a",
+    "durationSeconds": 3,
+    "width": 640,
+    "height": 360,
+    "frames": 72,
+    "fps": 24,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "audio": false,
+    "fullDecode": "passed",
+    "browserPlayback": {
+      "duration": 3,
+      "currentTime": 1.200414,
+      "decodedFrames": 38,
+      "readyState": 4,
+      "width": 640,
+      "height": 360,
+      "error": null
+    }
+  },
+  "visualReview": {
+    "status": "passed",
+    "reviewer": "Codex image inspection",
+    "frames": [
+      "synthetic-source-1s.png",
+      "selected-export-1s.png",
+      "variant-2-1s.png"
+    ],
+    "finding": "Noir removes color; cinematic alters color/contrast; source timestamp and full frame remain visible."
+  },
+  "staleExport": {
+    "state": "failed",
+    "code": "EXPORT_NOT_READY",
+    "outputCreated": false
+  },
+  "localChecks": {
+    "quality": "passed",
+    "tests": 71,
+    "coverage": {
+      "lines": 88.2658,
+      "functions": 89.272,
+      "regions": 80.8883
+    },
+    "externalSwiftPackages": 0
+  },
+  "limits": [
+    "No real creator footage or audio",
+    "No synchronized SwiftUI interaction verified",
+    "No public package install, notarization or Gatekeeper verification",
+    "Only noir/cinematic effects qualified; catalog completeness is not asserted"
+  ]
+}

@@ -72,12 +72,12 @@ The same gate is `node scripts/check-code-health.mjs all`. Those commands remain
 authoritative; `package.json` only exposes them as `format:check`, `lint`,
 `typecheck`, `test`, `test:coverage`, and `quality:*` selectors.
 
-The gate runs 43 native tests, measures StudioCore and MediaEngine coverage,
+The gate runs 71 native tests, measures StudioCore and MediaEngine coverage,
 builds every SwiftPM target, checks unused code, complexity, exact duplication,
 the dependency graph, suppressions, repository hygiene, and the static site.
-Existing formatter, complexity, duplication, and coverage gaps are ratcheted to
-[issue #16](https://github.com/sass-maker/local-ai-video-studio/issues/16): a
-change may improve those baselines, but may not make them worse. Run a narrower
+Complexity, duplication, and coverage baselines remain non-regressing.
+[Issue #16](https://github.com/sass-maker/local-ai-video-studio/issues/16) is
+closed historical cleanup context; it is not an active work item. Run a narrower
 selector such as `coverage`, `build`, `unused`, or `site` while iterating.
 
 ## Prepare a Mac application
@@ -139,3 +139,29 @@ These are unresolved requirements retained at the owner’s request. They are no
 Compare deterministic local editing and variant review against existing editors before implementing more capabilities; owner is reconsidering the product.
 
 Original requirements and discussion: [#33](https://github.com/sass-maker/local-ai-video-studio/issues/33).
+
+### Verified local scope and remaining decision
+
+The 2026-09-07 audit exercised native source analysis, real Apple on-device
+planning, graph edits, two AVFoundation renders, project selection, and export.
+The selected three-second silent synthetic export passed full decoding and
+browser playback. This qualifies the structured effects workflow only.
+[Evidence and replacement assessment](docs/shareability-assessment-2026-09-07.md).
+
+Keep this experiment inactive and use an established editor for actual creator
+work. Preserve the small local effects engine; reconsider it only if a recurring
+job benefits measurably from reproducible variant comparison. Broader ChatCut
+parity remains unimplemented. On review: **1 open issue (#33), 0 open PRs, 0
+closures**. The issue is retained because the requested capabilities are not
+complete.
+
+Before reconsidering public sharing, retain these gates:
+
+- A real creator workflow and comparison against an existing editor.
+- Accurate effect readiness: titles/captions, subject tracking, segmentation,
+  crossfades, audio normalization, and beat-aware effects need implementation
+  or clearer catalog disclosure; a registered effect is not proof it works.
+- Human verification of import, synchronized comparison, selection, and export
+  in the SwiftUI app, including actual audio and longer source media.
+- An approved support channel and signed, notarized, stapled Mac package that
+  passes Gatekeeper on a clean installation.

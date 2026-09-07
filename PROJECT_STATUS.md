@@ -1,6 +1,6 @@
 # Local AI Video Studio — PROJECT STATUS
 
-Last updated: 2026-08-31
+Last updated: 2026-09-07
 
 ## Why / What
 
@@ -31,6 +31,13 @@ frame-perfect editing.
 - Fleet OpenSpec and design-review workflows during development only.
 
 ## Timeline
+
+- 2026-09-07 — Qualified the native structured effects workflow with an original
+  silent synthetic source, real Apple on-device plans, graph edits, two renders,
+  selection, export, decoding and playback. Full local quality gate passed
+  71 tests. Documented renderer gaps and a keep-inactive replacement assessment
+  in [the audit](docs/shareability-assessment-2026-09-07.md); no product feature
+  expansion, package release, or deployment.
 
 - 2026-08-31 — Added source-ready product-owned Microsoft Clarity tracking to
   the public informational site and disclosed its PostHog and Clarity use in
