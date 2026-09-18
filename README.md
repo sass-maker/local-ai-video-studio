@@ -1,5 +1,7 @@
 # Local AI Video Studio
 
+> **Archived experimental concept — no longer maintained.** See [owner decision and return condition](CONCEPT_STATUS.md). Historical setup instructions and roadmaps are retained for reference.
+
 A local-first macOS prototype that turns editing intent into strict, reproducible effect graphs, renders 2–5 video variants on-device, and compares them with synchronized playback.
 
 ## Requirements
